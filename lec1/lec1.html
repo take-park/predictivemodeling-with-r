@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lecture 1</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Issac Lee" />
+    <meta name="date" content="2021-02-25" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Lecture 1
+## Github, Kaggle, and R Markdown
+### Issac Lee
+### 2021-02-25
+
+---
+
+
+
+
+
+
+class: center, middle
+
+# Sungkyunkwan University
+
+![](https://upload.wikimedia.org/wikipedia/en/thumb/4/40/Sungkyunkwan_University_seal.svg/225px-Sungkyunkwan_University_seal.svg.png)
+
+## Actuarial Science
+
+---
+class: center, middle
+
+
+# Predictive modeling with R
+
+---
+class: inverse, center, middle
+
+# Instructor
+
+---
+
+# Issac Lee
+
+![](https://www.theissaclee.com/authors/admin/avatar_hu77848fc2b8cf78ff7b33063dcc9739c0_249923_270x270_fill_q90_lanczos_center.jpg)
+
+* The University Of Iowa, Statistics &amp; Actuarial Science
+
+* SungKyunKwan University, Actuarial Science
+
+* Website: [theissaclee.com](https://www.theissaclee.com/)
+
+---
+
+# Research Interests
+
+* Pay-How-You-Drive insurance telematics data
+* Replacing nested monte carlo simulation in insurance product valuation process
+* Machine learning in Actuarial Science
+* Graph theory &amp; Spatial Statistics
+
+---
+
+# My family Another Me
+
+![](./issac-bomi.jpg)
+---
+# Companions
+
+.pull-left[
+## Jelly
+![](./jelly.jpg)
+]
+.pull-right[
+## Soony
+![](./soony.jpg)
+]
+
+---
+class: inverse, center, middle
+&lt;img src="./hammer.svg" width="15%" style="display: block; margin: auto;" /&gt;&lt;img src="./ice-cube.svg" width="15%" style="display: block; margin: auto;" /&gt;
+
+
+# Tell me about you
+
+---
+
+class: inverse, center, middle
+
+# Lecture Intro.
+
+---
+
+.pull-left[
+# Basic Info.
+
+* Friday 9 am. - 12 am.
+
+* Zoom will be provided
+
+* Two 10 min. breaks
+
+]
+.pull-right[
+# Our goal
+
+* Find your **RESEARCH TOPIC**
+
+* Explore many ML methodology
+
+* Solid background about **Models**
+
+* Solid background about **R**
+
+  * Modeling and Visualization
+
+  * Documentation
+
+* How to collaborate with other people (Team codebook)
+
+]
+
+---
+# Course Info.
+
+* E-mail: sak-lee@uiowa.edu
+
+* Please use **[SKKU:5155]** in your email subject
+
+* Textbook
+  
+  - An Intro. to Statistical Learning
+
+* Reference: 
+
+  - Applied Predictive modeling
+  - Feature Engineering and selection
+
+---
+
+# Course Topics
+
+### Setup
+
+* Github, Kaggle, R markdown
+
+### R programming
+
+* `tidyverse`, `tidymodels`, `torch`
+
+### Statistical Models
+
+* Regression, Classification, Tree-Based method, Deep-learning
+
+---
+
+# Course Activities
+
+- Identify 3 candidate papers of different topics from the paper list. One will be assigned for presentation.
+
+* Literature Review
+  - Submit a 1500-words summary of the assigned paper
+  
+* Paper presentation
+  - Present the paper in one of the classes. (20 min.) 
+  - Prepare questions to ask the presenters you are assigned to review, and submit your comments
+
+---
+
+# Course Activities 2
+
+* Form groups of three and sign up your group by next week
+
+* Individaul Presentation -
+
+* Literature review (LR) – 20%
+
+  - Propose topic and provide a list of at least 5 papers, more preferred.
+  - Submit final LR document (in Rmd template)
+
+* Course project (CP) (30%)
+  * Proposal document &amp; mid-term presentation, final presentation &amp; report
+
+---
+
+# Course Activities 3
+
+* Apply methods learned in the course to solve an important problem. 
+
+* Evaluate and compare the performance of state-of-the-art methods on a problem
+
+* Methodological innovation is not required, but encouraged.
+
+Each group **MUST** have at least one meeting with me during office hours to discuss LR &amp; CP topic.
+
+---
+class: inverse, middle, center
+
+&lt;img src="./question.svg" width="30%" style="display: block; margin: auto;" /&gt;
+# Questions?
+
+.footnote[Icons made by Freepik from flaticon.com]
+
+---
+&lt;iframe width="1300" height="600" src="https://www.youtube.com/embed/s3JldKoA0zw?version=3&amp;rel=0" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+---
+
+# Set up **RStudio** Cloud 
+
+* Sign up for a free RStudio Cloud account at https://rstudio.cloud/ 
+
+* Recommend logging in with an existing Google or GitHub account
+
+* I want you to be able to work from your own laptop in this workshop, but Cloud is **an important back-up plan** should you run into troubles.
+
+---
+
+# R markdown
+.pull-left[
+
+* R + Markdown
+
+* We know R part
+
+* How about Markdown part?
+
+* [Markdown 10-minute interactive tutorial](https://commonmark.org/help/tutorial/)
+
+  Pandoc takes care of markdown part. Pandoc is a universal document converter, which is written in [Haskell](https://www.haskell.org/).
+
+]
+.pull-right[
+
+![](https://d33wubrfki0l68.cloudfront.net/aee91187a9c6811a802ddc524c3271302893a149/a7003/images/bandthree2.png)
+]
+
+---
+# The Knitting process
+
+When we knitr the Rmd document, R generates md file, and it will be passed to pandoc!
+
+![](https://d33wubrfki0l68.cloudfront.net/61d189fd9cdf955058415d3e1b28dd60e1bd7c9b/9791d/images/rmarkdownflow.png)
+
+* Possible outcomes: PDF(LaTex), HTML, Word file, epub file.. 
+
+* [Gallery](https://rmarkdown.rstudio.com/gallery.html)
+
+
+---
+# Anatomy of an Rmd file
+
+````markdown
+---
+title: "Here is the title"
+date: 2021-02-23
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+# Normal Distribution
+
+Actually, Normal distribution is not normal, it's so special in Stat.
+
+```{r}
+x &lt;- rnorm(100)
+y &lt;- rnorm(100)
+plot(x, y)
+```
+
+````
+
+---
+# YAML header ("YAML Ain't Markup Language")
+
+````markdown
+*---
+*title: "Here is the title"
+*date: 2021-02-23
+*output: html_document
+*---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+# Normal Distribution
+
+Actually, Normal distribution is not normal, it's so special in Stat.
+
+```{r}
+x &lt;- rnorm(100)
+y &lt;- rnorm(100)
+plot(x, y)
+```
+
+````
+
+---
+
+# Body (Plain Text part)
+
+````markdown
+---
+title: "Here is the title"
+date: 2021-02-23
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+*# Normal Distribution
+*
+*Actually, Normal distribution is not normal, it's so special in Stat.
+
+```{r}
+x &lt;- rnorm(100)
+y &lt;- rnorm(100)
+plot(x, y)
+```
+
+````
+
+---
+
+# Code ("Not only R code")
+
+````markdown
+---
+title: "Here is the title"
+date: 2021-02-23
+output: html_document
+---
+
+*```{r setup, include=FALSE}
+*library(tidyverse)
+*```
+
+# Normal Distribution
+
+Actually, Normal distribution is not normal, it's so special in Stat.
+
+*```{r}
+*x &lt;- rnorm(100)
+*y &lt;- rnorm(100)
+*plot(x, y)
+*```
+
+````
+
+---
+class: inverse, middle, center
+
+# Basic Syntax
+
+---
+
+class: syntax-slide
+
+.pull-left[
+  ### This...
+  \*italics\* and \*\*bold\*\*  
+  
+  &lt;span&gt;&amp;#96;&lt;/span&gt; inline code&amp;#96;
+  
+  sub~2~/superscript^2^
+  
+  \~\~strikethrough\~\~
+  
+  escaped: \\* \\_ \\\
+  
+  endash: --, emdash: ---
+  
+  \&gt; blockquote
+  
+  \# Header 1
+  
+]
+
+.pull-right[
+  ### turns into this...
+  *italics* and **bold**
+  
+  `inline code`
+  
+  sub&lt;sub&gt;2&lt;/sub&gt;/superscript&lt;sup&gt;2&lt;/sup&gt;
+  
+  ~~strikethrough~~
+  
+  escaped: \* \_ \\
+  
+  endash: &amp;ndash;, emdash: &amp;mdash;
+  
+  &gt; blockquote
+  
+  # Header 1
+
+]
+
+---
+class: syntax-slide 
+.pull-left[
+  ### This...
+  
+  \- unordered list &lt;br&gt;
+  &amp;nbsp; &amp;nbsp; \- sub-item &lt;br&gt;
+  &amp;nbsp; &amp;nbsp; &amp;nbsp; \- sub-sub-item
+  
+  1\. ordered list &lt;br&gt;
+  1\. item 2 &lt;br&gt;
+  &amp;nbsp; &amp;nbsp; \- sub-item 1 &lt;br&gt;
+
+  inline-math: &amp;#36;A = \pi*r^{2}&amp;#36;
+  
+  math-block: &lt;span&gt;&amp;#36;&lt;/span&gt;&amp;#36;A = \pi*r^{2}&amp;#36;&amp;#36;
+  
+]
+.pull-right[
+  ### turns into this...
+  
+  - unordered list
+    - sub-item
+      - sub-sub-item
+  
+  1. ordered list
+  1. item 2 &lt;br&gt;
+    i. sub-item 1 &lt;br&gt;
+
+  inline-math: `\(A = \pi*r^{2}\)`
+  
+  math-block: `$$A = \pi*r^{2}$$`
+  
+]
+
+---
+class: inverse, middle, center
+
+&lt;img src="./code.svg" width="30%" style="display: block; margin: auto;" /&gt;
+
+# Code
+
+.footnote[Icons made by Freepik from flaticon.com]
+
+---
+class: small-font
+# Code chunks
+
+![](https://raw.githubusercontent.com/ulyngs/rmarkdown-workshop-2019/master/slides/figures/chunk-parts.png)
+---
+
+# Some chunk options
+
+- `echo`: whether or not to display code in knitted output
+- `eval`: whether or to to run the code in the chunk when knitting
+- `include`: whether to include anything from the from a code chunk in the output document
+
+---
+# Setup chunk
+
+````markdown
+```{r setup, include=FALSE}
+# don't show code unless we explicitly set echo = TRUE
+knitr::opts_chunk$set(echo = FALSE)
+```
+````
+
+- Normally, an R Markdown document starts with a chunk that's used to set some options and load required libraries.
+
+- `knitr::opts_chunk$set` sets default options for all chunks.
+
+
+---
+# Including images
+
+.pull-left[
+
+````markdown
+```{r chunkname, 
+            fig.cap="picture caption",
+            fig.align="center",
+            out.width="50%"}
+knitr::include_graphics("markdown.png")
+```
+````
+]
+
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="./question.svg" alt="picture caption" width="50%" /&gt;
+&lt;p class="caption"&gt;picture caption&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+---
+# Inserting plot
+
+.pull-left[
+
+````markdown
+```{r}
+cars %&gt;% 
+  ggplot() +
+    aes(x = speed, y = dist) +
+    geom_point()
+```
+````
+
+]
+
+.pull-right[
+
+```r
+cars %&gt;% 
+  ggplot() +
+    aes(x = speed, y = dist) +
+    geom_point()
+```
+
+&lt;img src="lec1_files/figure-html/unnamed-chunk-2-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# Tables
+
+.pull-left[
+````markdown
+```{r}
+knitr::kable(head(as.tibble(mtcars[,1:3]), 5), 
+             position = "!h",
+             col.names = c("col1", "col2", "col3"),
+             caption = "caption", 
+             align = "lrc", booktab = TRUE)
+```
+````
+]
+
+.pull-right[
+
+Table: caption
+
+|col1 | col2| col3 |
+|:----|----:|:----:|
+|21.0 |    6| 160  |
+|21.0 |    6| 160  |
+|22.8 |    4| 108  |
+|21.4 |    6| 258  |
+|18.7 |    8| 360  |
+
+]
+
+
+---
+# Inline code
+
+Inside your text you can include code with the syntax &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; r code here&amp;#96; &amp;nbsp;.
+
+For example, &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; r 4 + 4&amp;#96; &amp;nbsp; would output 8 in your text. 
+
+
+```r
+dim(diamonds)
+```
+
+```
+## [1] 53940    10
+```
+
+```r
+num_diamonds &lt;- nrow(diamonds)
+```
+
+.pull-left[
+There are &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; r num_diamonds&amp;#96;  &amp;nbsp; rows in the `diamonds` dataset.
+]
+
+.pull-right[
+There are 53940 rows in the `diamonds` dataset.
+]
+
+---
+class: larger-body
+# Inline code with python
+
+At the moment, syntax like &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; python code here&amp;#96; &amp;nbsp; is not valid. However, you can use the [`reticulate`](https://rstudio.github.io/reticulate/articles/r_markdown.html) package to access variables from python chunks.
+
+````markdown
+```{python}
+my_number = 4 + 8
+```
+````
+
+
+
+````markdown
+```{r}
+library(reticulate)
+py$my_number
+```
+````
+
+
+```r
+py$my_number
+```
+
+```
+## [1] 12
+```
+
+`my_number` can be referred inline by &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; r py$my_number&amp;#96;&amp;nbsp;.
+
+---
+class: center, middle, inverse
+
+# Useful tips
+
+---
+# Very Important
+
+`Alt` + `Shift` + `K` shows all shortcuts! However, some are USEFUL, some are **NOT**!
+
+### Useful **Shortcuts!**
+
+.pull-left[
+
+add `%&gt;%` operator: `Ctrl` + `Shift` + `m`
+
+add `&lt;-` operator: `Alt` + -
+
+add cursors! : `Ctrl` + `Alt` + down or up
+
+search functions: `Ctrl` + .
+
+search commands: `Ctrl` + `Shift` + `p`
+
+]
+.pull-right[
+
+Run current chunk: `Ctrl` + `Alt` + `c`
+
+R code re-formatting: `Ctrl` + `Shift` + `a`
+
+Copy current below: `Shift` + `Alt` + down
+
+Insert `R` code chunk: `Ctrl` + `Alt` + i
+
+]
+
+---
+# Very Very Important
+
+Modify and Make your own shortcuts!
+
+`Tools` &gt; `Modify Keyboard Shortcuts` will open another door to you.
+
+For example,
+
+* Insert `python` code: `Ctrl` + `Alt` + p
+
+* Insert snippet: `Shift` + `Space`
+
+---
+# `\(Very^\infty\)` Important
+
+**Snippet** save your time, almost 1 year during your whole life, no joke.
+
+.pull-left[
+### What the hack is snippet
+* **Text macros** that are used for quickly inserting common snippets of code
+
+* `Tools` &gt; `Global option` &gt; `Code` &gt; `Snippet`
+
+* Some people know there are *code snippet* in Rstudio
+
+]
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="./snippet.jpg" alt="Available snippets languages" width="80%" /&gt;
+&lt;p class="caption"&gt;Available snippets languages&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+---
+# Markdown snippet
+
+You may notice that we have markdown snippet!! 
+
+* You **DONT NEED TO MEMORIZE** all the Rmarkdown syntax!
+
+.pull-left[
+
+* Example `mypic` snippet
+
+````markdown
+snippet mypic
+    ```{r ${1:chunkname}, echo=FALSE, fig.cap="${2:caption}", fig.align='center', out.width = '100%'}
+	  knitr::include_graphics("${3:filepath}")
+	  ```
+````
+
+]
+.pull-right[
+
+![](./examplesnippet.gif)
+
+]
+
+---
+# Snippet is in action
+
+
+---
+# **R**Markdown packages
+
+.pull-left[
+
+* **Pagedown**: single html document generation
+
+* **Bookdown** - pdf, epub, or html book
+
+  * Writing a gitbook like [Prof. Tierney](http://homepage.stat.uiowa.edu/~luke/classes/STAT7400-2021/_book/index.html)
+
+* **Blogdown** - Static website builder Hugo wrapper
+
+  * Personal website like [me](theissaclee.com)
+
+  * Theme: Academy, Apero (is developing by Rstudio)
+
+]
+.pull-right[
+
+* **Distill**: if you really like minimalizm.
+
+  * Concept is developed by Google, package developed by Rstudio.
+  * Suitible for academic writing
+
+* **Xaringan**: Presentation
+
+  *  Like the one you're looking at.
+
+  * `xaringan themer` - Easy theming package 
+  
+* **Thesisdown**: Thesis with Rmd.
+
+]
+
+---
+# Set up GitHub 
+
+* Using GitHub in this lecture for **version control** and **publishing**.
+
+* Sign up for a GitHub.com account at https://github.com/join
+
+* Complete these installation instructions.
+
+* Test your connection between GitHub and RStudio following these steps.
+
+  * you choose HTTPS over SSH, and
+  * you setup a GitHub Personal Access Token.
+
+---
+# Check out your default branch
+
+* `main` as the default branch for all new repositories
+
+* To check this, for user accounts, go to: https://github.com/settings/repositories
+
+* You should see something like this:
+
+&lt;img src="./mainbranch.jpg" width="50%" style="display: block; margin: auto;" /&gt;
+
+If yours still says master, you may change it to main here if you wish.
+
+---
+# Github Intergration
+
+
+```r
+install.packages(c("usethis", "remotes"))
+remotes::install_github("rstudio/rmarkdown")
+```
+
+
+```r
+rmarkdown::pandoc_version()
+```
+
+```
+## [1] '2.11.4'
+```
+
+### Set up your Github PAT(Personal Access Token)
+
+To use `usethis` package, you need to set up PAT. Instruction is here:
+
+https://happygitwithr.com/credential-caching.html#get-a-pat
+
+
+---
+
+# Publish your self in online
+
+
+```r
+install.packages("postcards")
+```
+
+* Restart your R session. 
+* If you use RStudio, use the menu item Session &gt; Restart R
+  * Ctrl + Shift + F10 (Windows and Linux) or
+  * Command + Shift + F10 (Mac OS).
+
+
+```r
+packageVersion("postcards")
+```
+
+```
+## [1] '0.2.0'
+```
+
+---
+# Create GitHub repo 
+
+We’ll follow a “New Project, GitHub first” workflow.
+
+* Go online to your GitHub account
+* Create a new repository and YES initialize this repository by adding a README file.
+
+
+```r
+usethis::create_from_github("username/my-postcard", 
+                            destdir = "/pathto/project")
+```
+
+in RStudio Cloud see this link:
+
+https://bren.zendesk.com/hc/en-us/articles/360015826731-How-to-connect-RStudio-Cloud-with-Github
+
+---
+# Create your post-card
+
+
+```r
+library(postcards)
+create_postcard()
+```
+
+Four Theme
+
+* jolla (https://seankross.com/postcards-templates/jolla/)
+* jolla-blue (https://seankross.com/postcards-templates/jolla-blue/)
+* trestles (https://seankross.com/postcards-templates/trestles/)
+* onofre (https://seankross.com/postcards-templates/onofre/)
+
+---
+# Knit postcard
+
+* Edit your postcard
+
+* Publish a postcard
+
+
+```r
+usethis::use_github_pages(branch = "main", path = "/")
+```
+
+---
+# Make your portfolio website with distill
+
+* Distill is a package built for R Markdown, 
+* Aiming to creating computational documents in R.
+* The goal of the Distill is to provide an output format optimized for online **scientific and technical** communication.
+* Awesome template for your [portfolio site](https://ijeamaka-anyene.netlify.app/)
+
+.pull-left[
+
+
+```r
+# install.packages("distill")
+packageVersion("distill")
+```
+
+```
+## [1] '1.2'
+```
+
+]
+.pull-right[
+&lt;img src="https://iyo-rstudio-global.netlify.app/package/distill/featured-hex.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# How to
+
+1. Create &amp; Clone GitHub repo, then First commit &amp; push
+
+  * Test yourself, you can do it now.
+
+1. Create a new distill site
+
+```r
+library(distill)
+create_website(dir = ".", title = "iyo-distill", gh_pages = TRUE)
+```
+
+1. Build site 
+
+* Close the RStudio IDE and re-open it. Look in your Git pane, you should see a .Rproj file has changed:
+
+* Hit Build tab, and build your first website!
+
+---
+# Polish the main site
+
+Use `postcard` package to polish the main site.
+
+* `index.Rmd` file YMAL
+
+```ymal
+---
+title: "your name"
+image: "your picture.png"
+links:
+  - label: GitHub
+    url: "https://github.com/your_id"
+  - label: LinkedIn
+    url: "https://www.linkedin.com/in/your_id/"
+  - label: Email
+    url: "mailto:youremail@gmail.com"
+site: distill::distill_website
+output:
+  postcards::trestles
+---
+```
+
+---
+# Site navigation
+
+`_site.yml` controls the site behavior
+
+```ymal
+---
+output: distill::distill_article
+output_dir: "docs"
+---
+```
+
+* Commit &amp; Publish site
+
+
+```r
+usethis::use_github_pages(branch = "main", path = "/docs")
+```
+
+---
+# Add portfolio page
+
+
+```r
+distill::create_post("first-writing")
+```
+
+* Creates a directory called `_posts/` to hold all your future blog posts.
+
+* Creates a new post with a “slug” including the date and the name of the post (here, mine was "welcome").
+
+---
+# Add listing page
+
+.pull-left[
+
+### Create Portfolio tab
+
+* Add a blank .Rmd file to your project root, e.g. `portfolio.Rmd`
+
+* Add following YAML
+
+```yaml
+---
+title: "Portfolio"  # any name you want here
+listing: posts # do this exactly
+---
+```
+
+]
+.pull-right[
+### Add a link to the main page
+
+* Edit `_site.yml` file &amp; Check the result
+
+```yaml
+---
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Portfolio"      # add
+      href: portfolio.html   # add
+    - icon: fab fa-github    # try
+      href: https://github.com/your-id 
+    - icon: fab fa-linkedin-in #try  
+      href: https://www.linkedin.com/in/your-account/ 
+---
+```
+]
+
+---
+# Add categories
+
+* To get the category page, add the following `yaml`
+
+```yaml
+---
+collections:
+  posts:
+    categories: true
+    categories_metadata: true
+    authors_metadata: true
+---
+```
+
+* Look at your YAML file, which should be look like [this](https://github.com/statisticsplaybook/kaggle-playbook/blob/main/_site.yml) 
+
+---
+# Theme
+
+* You can edit your theme
+
+  https://rstudio.github.io/distill/website.html#theming
+
+* For changing Korean font
+
+  * See the following repo:
+  
+  https://github.com/statisticsplaybook/kaggle-playbook
+  
+  * In Action
+  
+  https://statisticsplaybook.github.io/kaggle-playbook/
+  
+
+---
+# Authoring 
+
+
+
+  
+---
+class: center, middle
+
+# Thanks!
+
+Slides Contents is built above 
+
+Wonderful Rmd workshop by [Ulrik Lyngs](https://github.com/ulyngs/rmarkdown-workshop-2019)
+
+Wonderful IYO workshop by [Allison Hill](https://iyo-rstudio-global.netlify.app/)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
