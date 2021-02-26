@@ -496,7 +496,6 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - `knitr::opts_chunk$set` sets default options for all chunks.
 
-
 ---
 # Including images
 
