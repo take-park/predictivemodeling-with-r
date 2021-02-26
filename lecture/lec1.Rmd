@@ -1,28 +1,38 @@
-<!DOCTYPE html>
-<html lang="" xml:lang="">
-  <head>
-    <title>Lecture 1</title>
-    <meta charset="utf-8" />
-    <meta name="author" content="Issac Lee" />
-    <meta name="date" content="2021-02-25" />
-    <script src="libs/header-attrs/header-attrs.js"></script>
-    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
-  </head>
-  <body>
-    <textarea id="source">
-class: center, middle, inverse, title-slide
-
-# Lecture 1
-## Github, Kaggle, and R Markdown
-### Issac Lee
-### 2021-02-25
-
+---
+title: "Lecture 1"
+subtitle: "Github, Kaggle, and R Markdown"  
+author: 
+  - "Issac Lee"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
 ---
 
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
 
-
-
-
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(tidyverse)
+library(reticulate)
+library(xaringanthemer)
+style_duo_accent(
+  text_font_size = "1.3rem",
+  footnote_font_size = "0.6em",
+  footnote_position_bottom = "20px",
+  primary_color = "#7dad47",
+  secondary_color = "#01467f",
+  inverse_header_color = "#FFFFFF",
+  code_font_google   = google_font("Fira Mono")
+)
+```
 
 class: center, middle
 
@@ -49,7 +59,7 @@ class: inverse, center, middle
 
 ![](https://www.theissaclee.com/authors/admin/avatar_hu77848fc2b8cf78ff7b33063dcc9739c0_249923_270x270_fill_q90_lanczos_center.jpg)
 
-* The University Of Iowa, Statistics &amp; Actuarial Science
+* The University Of Iowa, Statistics & Actuarial Science
 
 * SungKyunKwan University, Actuarial Science
 
@@ -62,28 +72,14 @@ class: inverse, center, middle
 * Pay-How-You-Drive insurance telematics data
 * Replacing nested monte carlo simulation in insurance product valuation process
 * Machine learning in Actuarial Science
-* Graph theory &amp; Spatial Statistics
-
----
-
-# My family Another Me
-
-![](./issac-bomi.jpg)
----
-# Companions
-
-.pull-left[
-## Jelly
-![](./jelly.jpg)
-]
-.pull-right[
-## Soony
-![](./soony.jpg)
-]
+* Graph theory & Spatial Statistics
 
 ---
 class: inverse, center, middle
-&lt;img src="./hammer.svg" width="15%" style="display: block; margin: auto;" /&gt;&lt;img src="./ice-cube.svg" width="15%" style="display: block; margin: auto;" /&gt;
+```{r ice-break, echo=FALSE, out.width = '15%', fig.ncol=2, fig.align='center'}
+knitr::include_graphics("./hammer.svg")
+knitr::include_graphics("./ice-cube.svg")
+```
 
 
 # Tell me about you
@@ -186,7 +182,7 @@ class: inverse, center, middle
   - Submit final LR document
 
 * Course project (CP) (30%)
-  * Proposal document &amp; mid-term presentation, final presentation &amp; report
+  * Proposal document & mid-term presentation, final presentation & report
 
 ---
 
@@ -198,18 +194,20 @@ class: inverse, center, middle
 
 * Methodological innovation is not required, but encouraged.
 
-Each group **MUST** have at least one meeting with me during office hours to discuss LR &amp; CP topic.
+Each group **MUST** have at least one meeting with me during office hours to discuss LR & CP topic.
 
 ---
 class: inverse, middle, center
 
-&lt;img src="./question.svg" width="30%" style="display: block; margin: auto;" /&gt;
+```{r question, echo=FALSE, fig.cap="", fig.align='center', out.width = '30%'}
+knitr::include_graphics("./question.svg")
+```
 # Questions?
 
 .footnote[Icons made by Freepik from flaticon.com]
 
 ---
-&lt;iframe width="1300" height="600" src="https://www.youtube.com/embed/s3JldKoA0zw?version=3&amp;rel=0" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen&gt;&lt;/iframe&gt;
+<iframe width="1300" height="600" src="https://www.youtube.com/embed/s3JldKoA0zw?version=3&rel=0" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 ---
 
 # Set up **RStudio** Cloud 
@@ -263,7 +261,7 @@ date: 2021-02-23
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+`r ''````{r setup, include=FALSE}
 library(tidyverse)
 ```
 
@@ -271,9 +269,9 @@ library(tidyverse)
 
 Actually, Normal distribution is not normal, it's so special in Stat.
 
-```{r}
-x &lt;- rnorm(100)
-y &lt;- rnorm(100)
+`r ''````{r}
+x <- rnorm(100)
+y <- rnorm(100)
 plot(x, y)
 ```
 
@@ -289,7 +287,7 @@ plot(x, y)
 *output: html_document
 *---
 
-```{r setup, include=FALSE}
+`r ''````{r setup, include=FALSE}
 library(tidyverse)
 ```
 
@@ -297,9 +295,9 @@ library(tidyverse)
 
 Actually, Normal distribution is not normal, it's so special in Stat.
 
-```{r}
-x &lt;- rnorm(100)
-y &lt;- rnorm(100)
+`r ''````{r}
+x <- rnorm(100)
+y <- rnorm(100)
 plot(x, y)
 ```
 
@@ -316,7 +314,7 @@ date: 2021-02-23
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+`r ''````{r setup, include=FALSE}
 library(tidyverse)
 ```
 
@@ -324,9 +322,9 @@ library(tidyverse)
 *
 *Actually, Normal distribution is not normal, it's so special in Stat.
 
-```{r}
-x &lt;- rnorm(100)
-y &lt;- rnorm(100)
+`r ''````{r}
+x <- rnorm(100)
+y <- rnorm(100)
 plot(x, y)
 ```
 
@@ -343,7 +341,7 @@ date: 2021-02-23
 output: html_document
 ---
 
-*```{r setup, include=FALSE}
+*`r ''````{r setup, include=FALSE}
 *library(tidyverse)
 *```
 
@@ -351,9 +349,9 @@ output: html_document
 
 Actually, Normal distribution is not normal, it's so special in Stat.
 
-*```{r}
-*x &lt;- rnorm(100)
-*y &lt;- rnorm(100)
+*`r ''````{r}
+*x <- rnorm(100)
+*y <- rnorm(100)
 *plot(x, y)
 *```
 
@@ -372,7 +370,7 @@ class: syntax-slide
   ### This...
   \*italics\* and \*\*bold\*\*  
   
-  &lt;span&gt;&amp;#96;&lt;/span&gt; inline code&amp;#96;
+  <span>&#96;</span> inline code&#96;
   
   sub~2~/superscript^2^
   
@@ -382,7 +380,7 @@ class: syntax-slide
   
   endash: --, emdash: ---
   
-  \&gt; blockquote
+  \> blockquote
   
   \# Header 1
   
@@ -394,15 +392,15 @@ class: syntax-slide
   
   `inline code`
   
-  sub&lt;sub&gt;2&lt;/sub&gt;/superscript&lt;sup&gt;2&lt;/sup&gt;
+  sub<sub>2</sub>/superscript<sup>2</sup>
   
   ~~strikethrough~~
   
   escaped: \* \_ \\
   
-  endash: &amp;ndash;, emdash: &amp;mdash;
+  endash: &ndash;, emdash: &mdash;
   
-  &gt; blockquote
+  > blockquote
   
   # Header 1
 
@@ -413,17 +411,17 @@ class: syntax-slide
 .pull-left[
   ### This...
   
-  \- unordered list &lt;br&gt;
-  &amp;nbsp; &amp;nbsp; \- sub-item &lt;br&gt;
-  &amp;nbsp; &amp;nbsp; &amp;nbsp; \- sub-sub-item
+  \- unordered list <br>
+  &nbsp; &nbsp; \- sub-item <br>
+  &nbsp; &nbsp; &nbsp; \- sub-sub-item
   
-  1\. ordered list &lt;br&gt;
-  1\. item 2 &lt;br&gt;
-  &amp;nbsp; &amp;nbsp; \- sub-item 1 &lt;br&gt;
+  1\. ordered list <br>
+  1\. item 2 <br>
+  &nbsp; &nbsp; \- sub-item 1 <br>
 
-  inline-math: &amp;#36;A = \pi*r^{2}&amp;#36;
+  inline-math: &#36;A = \pi*r^{2}&#36;
   
-  math-block: &lt;span&gt;&amp;#36;&lt;/span&gt;&amp;#36;A = \pi*r^{2}&amp;#36;&amp;#36;
+  math-block: <span>&#36;</span>&#36;A = \pi*r^{2}&#36;&#36;
   
 ]
 .pull-right[
@@ -434,19 +432,21 @@ class: syntax-slide
       - sub-sub-item
   
   1. ordered list
-  1. item 2 &lt;br&gt;
-    i. sub-item 1 &lt;br&gt;
+  1. item 2 <br>
+    i. sub-item 1 <br>
 
-  inline-math: `\(A = \pi*r^{2}\)`
+  inline-math: $A = \pi*r^{2}$
   
-  math-block: `$$A = \pi*r^{2}$$`
+  math-block: $$A = \pi*r^{2}$$
   
 ]
 
 ---
 class: inverse, middle, center
 
-&lt;img src="./code.svg" width="30%" style="display: block; margin: auto;" /&gt;
+```{r code, echo=FALSE, fig.cap="", fig.align='center', out.width = '30%'}
+knitr::include_graphics("./code.svg")
+```
 
 # Code
 
@@ -469,7 +469,7 @@ class: small-font
 # Setup chunk
 
 ````markdown
-```{r setup, include=FALSE}
+`r ''````{r setup, include=FALSE}
 # don't show code unless we explicitly set echo = TRUE
 knitr::opts_chunk$set(echo = FALSE)
 ```
@@ -485,7 +485,7 @@ knitr::opts_chunk$set(echo = FALSE)
 .pull-left[
 
 ````markdown
-```{r chunkname, 
+`r ''````{r chunkname, 
             fig.cap="picture caption",
             fig.align="center",
             out.width="50%"}
@@ -496,10 +496,9 @@ knitr::include_graphics("markdown.png")
 
 .pull-right[
 
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="./question.svg" alt="picture caption" width="50%" /&gt;
-&lt;p class="caption"&gt;picture caption&lt;/p&gt;
-&lt;/div&gt;
+```{r echo=FALSE, out.width="50%", fig.align='center', fig.cap="picture caption"}
+knitr::include_graphics("./question.svg")
+```
 
 ]
 
@@ -509,8 +508,8 @@ knitr::include_graphics("markdown.png")
 .pull-left[
 
 ````markdown
-```{r}
-cars %&gt;% 
+`r ''````{r}
+cars %>% 
   ggplot() +
     aes(x = speed, y = dist) +
     geom_point()
@@ -520,15 +519,12 @@ cars %&gt;%
 ]
 
 .pull-right[
-
-```r
-cars %&gt;% 
+```{r, out.width="60%", fig.align='center', fig.retina = 3}
+cars %>% 
   ggplot() +
     aes(x = speed, y = dist) +
     geom_point()
 ```
-
-&lt;img src="lec1_files/figure-html/unnamed-chunk-2-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -537,7 +533,7 @@ cars %&gt;%
 
 .pull-left[
 ````markdown
-```{r}
+`r ''````{r}
 knitr::kable(head(as.tibble(mtcars[,1:3]), 5), 
              position = "!h",
              col.names = c("col1", "col2", "col3"),
@@ -548,16 +544,14 @@ knitr::kable(head(as.tibble(mtcars[,1:3]), 5),
 ]
 
 .pull-right[
-
-Table: caption
-
-|col1 | col2| col3 |
-|:----|----:|:----:|
-|21.0 |    6| 160  |
-|21.0 |    6| 160  |
-|22.8 |    4| 108  |
-|21.4 |    6| 258  |
-|18.7 |    8| 360  |
+```{r echo=FALSE}
+# cars is a built-in-to-R data set of cars
+knitr::kable(head(as.tibble(mtcars[,1:3]), 5), 
+             position = "!h",
+             col.names = c("col1", "col2", "col3"),
+             caption = "caption", 
+             align = "lrc", booktab = TRUE)
+```
 
 ]
 
@@ -565,62 +559,51 @@ Table: caption
 ---
 # Inline code
 
-Inside your text you can include code with the syntax &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; r code here&amp;#96; &amp;nbsp;.
+Inside your text you can include code with the syntax <span>&#96;</span>&nbsp; r code here&#96; &nbsp;.
 
-For example, &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; r 4 + 4&amp;#96; &amp;nbsp; would output 8 in your text. 
+For example, <span>&#96;</span>&nbsp; r 4 + 4&#96; &nbsp; would output `r 4 + 4` in your text. 
 
-
-```r
+```{r, echo = TRUE}
 dim(diamonds)
-```
-
-```
-## [1] 53940    10
-```
-
-```r
-num_diamonds &lt;- nrow(diamonds)
+num_diamonds <- nrow(diamonds)
 ```
 
 .pull-left[
-There are &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; r num_diamonds&amp;#96;  &amp;nbsp; rows in the `diamonds` dataset.
+There are <span>&#96;</span>&nbsp; r num_diamonds&#96;  &nbsp; rows in the `diamonds` dataset.
 ]
 
 .pull-right[
-There are 53940 rows in the `diamonds` dataset.
+There are `r num_diamonds` rows in the `diamonds` dataset.
 ]
 
 ---
 class: larger-body
 # Inline code with python
 
-At the moment, syntax like &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; python code here&amp;#96; &amp;nbsp; is not valid. However, you can use the [`reticulate`](https://rstudio.github.io/reticulate/articles/r_markdown.html) package to access variables from python chunks.
+At the moment, syntax like <span>&#96;</span>&nbsp; python code here&#96; &nbsp; is not valid. However, you can use the [`reticulate`](https://rstudio.github.io/reticulate/articles/r_markdown.html) package to access variables from python chunks.
 
 ````markdown
-```{python}
+`r ''````{python}
 my_number = 4 + 8
 ```
 ````
 
-
+```{python echo=FALSE}
+my_number = 4 + 8
+```
 
 ````markdown
-```{r}
+`r ''````{r}
 library(reticulate)
 py$my_number
 ```
 ````
 
-
-```r
+```{r}
 py$my_number
 ```
 
-```
-## [1] 12
-```
-
-`my_number` can be referred inline by &lt;span&gt;&amp;#96;&lt;/span&gt;&amp;nbsp; r py$my_number&amp;#96;&amp;nbsp;.
+`my_number` can be referred inline by <span>&#96;</span>&nbsp; r py$my_number&#96;&nbsp;.
 
 ---
 class: center, middle, inverse
@@ -636,9 +619,9 @@ class: center, middle, inverse
 
 .pull-left[
 
-add `%&gt;%` operator: `Ctrl` + `Shift` + `m`
+add `%>%` operator: `Ctrl` + `Shift` + `m`
 
-add `&lt;-` operator: `Alt` + -
+add `<-` operator: `Alt` + -
 
 add cursors! : `Ctrl` + `Alt` + down or up
 
@@ -664,7 +647,7 @@ Insert `R` code chunk: `Ctrl` + `Alt` + i
 
 Modify and Make your own shortcuts!
 
-`Tools` &gt; `Modify Keyboard Shortcuts` will open another door to you.
+`Tools` > `Modify Keyboard Shortcuts` will open another door to you.
 
 For example,
 
@@ -673,7 +656,7 @@ For example,
 * Insert snippet: `Shift` + `Space`
 
 ---
-# `\(Very^\infty\)` Important
+# $Very^\infty$ Important
 
 **Snippet** save your time, almost 1 year during your whole life, no joke.
 
@@ -681,17 +664,16 @@ For example,
 ### What the hack is snippet
 * **Text macros** that are used for quickly inserting common snippets of code
 
-* `Tools` &gt; `Global option` &gt; `Code` &gt; `Snippet`
+* `Tools` > `Global option` > `Code` > `Snippet`
 
 * Some people know there are *code snippet* in Rstudio
 
 ]
 .pull-right[
 
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="./snippet.jpg" alt="Available snippets languages" width="80%" /&gt;
-&lt;p class="caption"&gt;Available snippets languages&lt;/p&gt;
-&lt;/div&gt;
+```{r snippet, echo=FALSE, fig.cap="Available snippets languages", fig.align='center', out.width = '80%'}
+knitr::include_graphics("./snippet.jpg")
+```
 
 ]
 
@@ -708,7 +690,7 @@ You may notice that we have markdown snippet!!
 
 ````markdown
 snippet mypic
-    ```{r ${1:chunkname}, echo=FALSE, fig.cap="${2:caption}", fig.align='center', out.width = '100%'}
+    `r ''````{r ${1:chunkname}, echo=FALSE, fig.cap="${2:caption}", fig.align='center', out.width = '100%'}
 	  knitr::include_graphics("${3:filepath}")
 	  ```
 ````
@@ -782,26 +764,22 @@ snippet mypic
 
 * You should see something like this:
 
-&lt;img src="./mainbranch.jpg" width="50%" style="display: block; margin: auto;" /&gt;
+```{r chunkname, echo=FALSE, fig.align='center', out.width = '50%'}
+knitr::include_graphics("./mainbranch.jpg")
+```
 
 If yours still says master, you may change it to main here if you wish.
 
 ---
 # Github Intergration
 
-
-```r
+```{r eval=FALSE}
 install.packages(c("usethis", "remotes"))
 remotes::install_github("rstudio/rmarkdown")
 ```
 
-
-```r
+```{r}
 rmarkdown::pandoc_version()
-```
-
-```
-## [1] '2.11.4'
 ```
 
 ### Set up your Github PAT(Personal Access Token)
@@ -815,23 +793,17 @@ https://happygitwithr.com/credential-caching.html#get-a-pat
 
 # Publish your self in online
 
-
-```r
+```{r, eval=FALSE}
 install.packages("postcards")
 ```
 
 * Restart your R session. 
-* If you use RStudio, use the menu item Session &gt; Restart R
+* If you use RStudio, use the menu item Session > Restart R
   * Ctrl + Shift + F10 (Windows and Linux) or
   * Command + Shift + F10 (Mac OS).
 
-
-```r
+```{r}
 packageVersion("postcards")
-```
-
-```
-## [1] '0.2.0'
 ```
 
 ---
@@ -842,8 +814,7 @@ We’ll follow a “New Project, GitHub first” workflow.
 * Go online to your GitHub account
 * Create a new repository and YES initialize this repository by adding a README file.
 
-
-```r
+```{r, eval=FALSE}
 usethis::create_from_github("username/my-postcard", 
                             destdir = "/pathto/project")
 ```
@@ -855,8 +826,7 @@ https://bren.zendesk.com/hc/en-us/articles/360015826731-How-to-connect-RStudio-C
 ---
 # Create your post-card
 
-
-```r
+```{r, eval=FALSE}
 library(postcards)
 create_postcard()
 ```
@@ -875,8 +845,7 @@ Four Theme
 
 * Publish a postcard
 
-
-```r
+```{r, eval=FALSE}
 usethis::use_github_pages(branch = "main", path = "/")
 ```
 
@@ -890,32 +859,28 @@ usethis::use_github_pages(branch = "main", path = "/")
 
 .pull-left[
 
-
-```r
+```{r}
 # install.packages("distill")
 packageVersion("distill")
 ```
 
-```
-## [1] '1.2'
-```
-
 ]
 .pull-right[
-&lt;img src="https://iyo-rstudio-global.netlify.app/package/distill/featured-hex.png" width="50%" style="display: block; margin: auto;" /&gt;
+```{r distill, echo=FALSE, fig.cap="", fig.align='center', out.width = '50%'}
+knitr::include_graphics("https://iyo-rstudio-global.netlify.app/package/distill/featured-hex.png")
+```
 
 ]
 
 ---
 # How to
 
-1. Create &amp; Clone GitHub repo, then First commit &amp; push
+1. Create & Clone GitHub repo, then First commit & push
 
   * Test yourself, you can do it now.
 
 1. Create a new distill site
-
-```r
+```{r, eval=FALSE}
 library(distill)
 create_website(dir = ".", title = "iyo-distill", gh_pages = TRUE)
 ```
@@ -962,18 +927,16 @@ output_dir: "docs"
 ---
 ```
 
-* Commit &amp; Publish site
+* Commit & Publish site
 
-
-```r
+```{r, eval=FALSE}
 usethis::use_github_pages(branch = "main", path = "/docs")
 ```
 
 ---
 # Add portfolio page
 
-
-```r
+```{r, eval=FALSE}
 distill::create_post("first-writing")
 ```
 
@@ -1003,7 +966,7 @@ listing: posts # do this exactly
 .pull-right[
 ### Add a link to the main page
 
-* Edit `_site.yml` file &amp; Check the result
+* Edit `_site.yml` file & Check the result
 
 ```yaml
 ---
@@ -1072,127 +1035,3 @@ Slides Contents is built above
 Wonderful Rmd workshop by [Ulrik Lyngs](https://github.com/ulyngs/rmarkdown-workshop-2019)
 
 Wonderful IYO workshop by [Allison Hill](https://iyo-rstudio-global.netlify.app/)
-    </textarea>
-<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create({
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false,
-"ratio": "16:9"
-});
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
-  window.dispatchEvent(new Event('resize'));
-});
-(function(d) {
-  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
-  if (!r) return;
-  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
-  d.head.appendChild(s);
-})(document);
-
-(function(d) {
-  var el = d.getElementsByClassName("remark-slides-area");
-  if (!el) return;
-  var slide, slides = slideshow.getSlides(), els = el[0].children;
-  for (var i = 1; i < slides.length; i++) {
-    slide = slides[i];
-    if (slide.properties.continued === "true" || slide.properties.count === "false") {
-      els[i - 1].className += ' has-continuation';
-    }
-  }
-  var s = d.createElement("style");
-  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
-  d.head.appendChild(s);
-})(document);
-// delete the temporary CSS (for displaying all slides initially) when the user
-// starts to view slides
-(function() {
-  var deleted = false;
-  slideshow.on('beforeShowSlide', function(slide) {
-    if (deleted) return;
-    var sheets = document.styleSheets, node;
-    for (var i = 0; i < sheets.length; i++) {
-      node = sheets[i].ownerNode;
-      if (node.dataset["target"] !== "print-only") continue;
-      node.parentNode.removeChild(node);
-    }
-    deleted = true;
-  });
-})();
-(function() {
-  "use strict"
-  // Replace <script> tags in slides area to make them executable
-  var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container script'
-  );
-  if (!scripts.length) return;
-  for (var i = 0; i < scripts.length; i++) {
-    var s = document.createElement('script');
-    var code = document.createTextNode(scripts[i].textContent);
-    s.appendChild(code);
-    var scriptAttrs = scripts[i].attributes;
-    for (var j = 0; j < scriptAttrs.length; j++) {
-      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
-    }
-    scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-})();
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-// adds .remark-code-has-line-highlighted class to <pre> parent elements
-// of code chunks containing highlighted lines with class .remark-code-line-highlighted
-(function(d) {
-  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
-  const preParents = [];
-  const findPreParent = function(line, p = 0) {
-    if (p > 1) return null; // traverse up no further than grandparent
-    const el = line.parentElement;
-    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
-  };
-
-  for (let line of hlines) {
-    let pre = findPreParent(line);
-    if (pre && !preParents.includes(pre)) preParents.push(pre);
-  }
-  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
-})(document);</script>
-
-<script>
-slideshow._releaseMath = function(el) {
-  var i, text, code, codes = el.getElementsByTagName('code');
-  for (i = 0; i < codes.length;) {
-    code = codes[i];
-    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
-      text = code.textContent;
-      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
-          /^\$\$(.|\s)+\$\$$/.test(text) ||
-          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
-        code.outerHTML = code.innerHTML;  // remove <code></code>
-        continue;
-      }
-    }
-    i++;
-  }
-};
-slideshow._releaseMath(document);
-</script>
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-(function () {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
-  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
-    script.src  = script.src.replace(/^https?:/, '');
-  document.getElementsByTagName('head')[0].appendChild(script);
-})();
-</script>
-  </body>
-</html>
