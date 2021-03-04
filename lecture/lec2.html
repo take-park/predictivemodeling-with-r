@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lecture 2 - Visualization</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Issac Lee" />
+    <meta name="date" content="2021-03-04" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Lecture 2 - Visualization
+## <code>tidyverse</code> intro. 1
+### Issac Lee
+### 2021-03-04
+
+---
+
+
+
+
+
+
+class: center, middle
+
+# Sungkyunkwan University
+
+![](https://upload.wikimedia.org/wikipedia/en/thumb/4/40/Sungkyunkwan_University_seal.svg/225px-Sungkyunkwan_University_seal.svg.png)
+
+## Actuarial Science
+
+---
+class: center, middle
+
+
+# Part 1: Get started
+
+
+---
+
+---
+class: center, middle
+
+
+# What is `tidyverse` ?
+
+---
+# `tidyverse` is a collection of R packages
+
+* "official" tidyverse initiated from 2016
+
+* Most of the components have a much longer history:
+
+  * `ggplot2` is 13 years old.
+  
+## Objective: 
+
+  * Help new learners to get started with doing data science in `R`.
+  
+---
+# Core packages
+
+.pull-left[
+
+
+```r
+library(tidyverse)
+```
+
+* `ggplot2`: data visualisation
+* `dplyr`: data wrangling
+* `readr`: reading data
+* `tibble`: modern data frames
+* `stringr`: string manipulation
+* `forcats`: dealing with factors
+* `tidyr`: data tidying
+* `purrr`: functional programming
+
+]
+.pull-right[
+![](https://education.rstudio.com/blog/2020/07/teaching-the-tidyverse-in-2020-part-1-getting-started/img/tidyverse-packages.png)
+]
+
+---
+# Tidy dataset
+
+`Tidy datasets` are easy to manipulate, model and visualize, and have a specific structure:
+
+* Each variable is a column
+* Each observation is a row
+* Each type of observational unit is a table
+
+.pull-left[
+
+| treatment | a |  b|
+|---|------------|------------|
+|John Smith |  | 2 |
+|Jane Doe | 16 | 11 |
+|Mary Johnson | 3 | 1 |
+
+]
+.pull-right[
+
+|person | treatment | result |
+|------|------------|--------|
+|John Smith | a | — |
+|Jane Doe | a | 16 |
+|Mary Johnson | a | 3 |
+|John Smith | b | 2 |
+|Jane Doe | b | 11 |
+|Mary Johnson | b | 1 |
+
+
+]
+  
+---
+# `tidyverse` Get started
+
+
+```r
+library(tidyverse)
+```
+
+* Take a look at what it says!
+
+* You need to **Read** message/warnings/errors. (Especially important when you have *error*.)
+
+* Tell me your interpretation
+
+* What does `::` mean?
+
+---
+# Example data set: `palmerpenguins`
+
+
+```r
+# devtools::install_github("allisonhorst/palmerpenguins")
+library(palmerpenguins)
+```
+
+* The goal of palmerpenguins is to provide a great dataset for data exploration &amp; visualization, as an alternative to `iris`.
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png" alt="palmerpenguins" width="50%" /&gt;
+&lt;p class="caption"&gt;palmerpenguins&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Hands-on: use your **R** skills
+
+* How many variables? How many penguins? for each type? 
+
+* Maximum values of `bill_length_mm` for each type?
+
+* Any plots?
+
+
+```r
+head(penguins)
+```
+
+```
+## # A tibble: 6 x 8
+##   species island bill_length_mm bill_depth_mm
+##   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Adelie  Torge~           39.1          18.7
+## 2 Adelie  Torge~           39.5          17.4
+## 3 Adelie  Torge~           40.3          18  
+## 4 Adelie  Torge~           NA            NA  
+## 5 Adelie  Torge~           36.7          19.3
+## 6 Adelie  Torge~           39.3          20.6
+## # ... with 4 more variables:
+## #   flipper_length_mm &lt;int&gt;,
+## #   body_mass_g &lt;int&gt;, sex &lt;fct&gt;, year &lt;int&gt;
+```
+
+---
+# Bill dimensions
+
+.pull-left[
+
+* bill length measures in `mm`
+
+* flipper == penguin's wing
+
+]
+.pull-right[
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="https://allisonhorst.github.io/palmerpenguins/reference/figures/culmen_depth.png" alt="bill lenght information" width="100%" /&gt;
+&lt;p class="caption"&gt;bill lenght information&lt;/p&gt;
+&lt;/div&gt;
+
+]
+
+---
+# Explore the data
+
+Let's take a big picture here.
+
+
+```r
+glimpse(penguins)
+```
+
+```
+## Rows: 344
+## Columns: 8
+## $ species           &lt;fct&gt; Adelie, Adelie,...
+## $ island            &lt;fct&gt; Torgersen, Torg...
+## $ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40....
+## $ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18....
+## $ flipper_length_mm &lt;int&gt; 181, 186, 195, ...
+## $ body_mass_g       &lt;int&gt; 3750, 3800, 325...
+## $ sex               &lt;fct&gt; male, female, f...
+## $ year              &lt;int&gt; 2007, 2007, 200...
+```
+
+---
+class: center, middle
+
+# The `pipe` operator; `%&gt;%`
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="https://revolution-computing.typepad.com/.a/6a010534b1db25970b01a3fd380b67970b-800wi" alt="Ceci n'est pas un pipe" width="60%" /&gt;
+&lt;p class="caption"&gt;Ceci n'est pas un pipe&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# `%&gt;%` operator
+
+* `tidyverse` operator
+
+* pass the result to the next function as the first input.
+
+
+```r
+sum(1:10)
+```
+
+```
+## [1] 55
+```
+
+```r
+1:10 %&gt;% sum()
+```
+
+```
+## [1] 55
+```
+
+---
+class: center, middle
+
+# 5 important verbes in `dplyr`
+
+`filter()`, `arrange()`, `select()`, `mutate()`, `summarise()`
+
+---
+class: center, middle
+
+# `filter()`
+
+---
+# `filter()` data
+
+* filtering data with condition.
+
+
+```r
+penguins %&gt;% 
+  filter(species == "Chinstrap")
+```
+
+```
+## # A tibble: 68 x 8
+##    species island bill_length_mm bill_depth_mm
+##    &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Chinst~ Dream            46.5          17.9
+##  2 Chinst~ Dream            50            19.5
+##  3 Chinst~ Dream            51.3          19.2
+##  4 Chinst~ Dream            45.4          18.7
+##  5 Chinst~ Dream            52.7          19.8
+##  6 Chinst~ Dream            45.2          17.8
+##  7 Chinst~ Dream            46.1          18.2
+##  8 Chinst~ Dream            51.3          18.2
+##  9 Chinst~ Dream            46            18.9
+## 10 Chinst~ Dream            51.3          19.9
+## # ... with 58 more rows, and 4 more
+## #   variables: flipper_length_mm &lt;int&gt;,
+## #   body_mass_g &lt;int&gt;, sex &lt;fct&gt;, year &lt;int&gt;
+```
+
+---
+# `filter()` data option
+
+* two conditions
+
+
+```r
+penguins %&gt;% 
+  filter(species == "Chinstrap", island == "Dream")
+```
+
+```
+## # A tibble: 68 x 8
+##    species island bill_length_mm bill_depth_mm
+##    &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Chinst~ Dream            46.5          17.9
+##  2 Chinst~ Dream            50            19.5
+##  3 Chinst~ Dream            51.3          19.2
+##  4 Chinst~ Dream            45.4          18.7
+##  5 Chinst~ Dream            52.7          19.8
+##  6 Chinst~ Dream            45.2          17.8
+##  7 Chinst~ Dream            46.1          18.2
+##  8 Chinst~ Dream            51.3          18.2
+##  9 Chinst~ Dream            46            18.9
+## 10 Chinst~ Dream            51.3          19.9
+## # ... with 58 more rows, and 4 more
+## #   variables: flipper_length_mm &lt;int&gt;,
+## #   body_mass_g &lt;int&gt;, sex &lt;fct&gt;, year &lt;int&gt;
+```
+
+---
+# `filter()` data option
+
+* how about `or` condition?
+
+
+```r
+penguins %&gt;% 
+  filter(species %in% c("Chinstrap", "Adelie"))
+```
+
+```
+## # A tibble: 220 x 8
+##    species island bill_length_mm bill_depth_mm
+##    &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Adelie  Torge~           39.1          18.7
+##  2 Adelie  Torge~           39.5          17.4
+##  3 Adelie  Torge~           40.3          18  
+##  4 Adelie  Torge~           NA            NA  
+##  5 Adelie  Torge~           36.7          19.3
+##  6 Adelie  Torge~           39.3          20.6
+##  7 Adelie  Torge~           38.9          17.8
+##  8 Adelie  Torge~           39.2          19.6
+##  9 Adelie  Torge~           34.1          18.1
+## 10 Adelie  Torge~           42            20.2
+## # ... with 210 more rows, and 4 more
+## #   variables: flipper_length_mm &lt;int&gt;,
+## #   body_mass_g &lt;int&gt;, sex &lt;fct&gt;, year &lt;int&gt;
+```
+
+---
+# logical operator in `R`
+
+1. `&amp;` : and
+1. `|` : or
+1. `!` : not
+1. `&gt;`, `&lt;`, `&lt;=`, `&gt;=` : relationship
+
+* How to write the following using the above logical operator?
+
+
+```r
+penguins %&gt;% 
+  filter(species %in% c("Chinstrap", "Adelie"), island == "Dream")
+```
+
+---
+# Your turn
+
+* How many penguins we have which they are either `Adelie` or `Gentoo`, and their bill length is between 30 and 100?
+
+--
+
+
+```r
+penguins %&gt;% 
+  filter(species %in% c("Adelie", "Gentoo"),
+         (bill_length_mm &gt; 30 &amp; bill_length_mm &lt; 100)) %&gt;% 
+  nrow()
+```
+
+```
+## [1] 274
+```
+
+---
+class: center, middle
+
+# `select()`
+
+---
+# `select()` data
+
+.pull-left[
+* `select()` columns from data
+
+
+```r
+penguins %&gt;% 
+  select(species, bill_length_mm, bill_depth_mm) %&gt;% 
+  head()
+```
+
+```
+## # A tibble: 6 x 3
+##   species bill_length_mm bill_depth_mm
+##   &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Adelie            39.1          18.7
+## 2 Adelie            39.5          17.4
+## 3 Adelie            40.3          18  
+## 4 Adelie            NA            NA  
+## 5 Adelie            36.7          19.3
+## 6 Adelie            39.3          20.6
+```
+
+]
+.pull-right[
+* deselect `species` column from data
+
+
+```r
+penguins %&gt;% 
+  select(-species) %&gt;% 
+  head()
+```
+
+```
+## # A tibble: 6 x 7
+##   island bill_length_mm bill_depth_mm
+##   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Torge~           39.1          18.7
+## 2 Torge~           39.5          17.4
+## 3 Torge~           40.3          18  
+## 4 Torge~           NA            NA  
+## 5 Torge~           36.7          19.3
+## 6 Torge~           39.3          20.6
+## # ... with 4 more variables:
+## #   flipper_length_mm &lt;int&gt;,
+## #   body_mass_g &lt;int&gt;, sex &lt;fct&gt;, year &lt;int&gt;
+```
+
+]
+
+
+---
+# `select()` multiple columns
+
+
+```r
+penguins %&gt;% 
+  select(bill_length_mm:body_mass_g)
+```
+
+```
+## # A tibble: 344 x 4
+##    bill_length_mm bill_depth_mm
+##             &lt;dbl&gt;         &lt;dbl&gt;
+##  1           39.1          18.7
+##  2           39.5          17.4
+##  3           40.3          18  
+##  4           NA            NA  
+##  5           36.7          19.3
+##  6           39.3          20.6
+##  7           38.9          17.8
+##  8           39.2          19.6
+##  9           34.1          18.1
+## 10           42            20.2
+## # ... with 334 more rows, and 2 more
+## #   variables: flipper_length_mm &lt;int&gt;,
+## #   body_mass_g &lt;int&gt;
+```
+
+---
+# `select()` with condition
+
+* select variables with the same ending
+
+
+```r
+penguins %&gt;% 
+  select(ends_with("mm")) %&gt;% 
+  names()
+```
+
+```
+## [1] "bill_length_mm"    "bill_depth_mm"    
+## [3] "flipper_length_mm"
+```
+
+
+---
+# `select()` with `everything()`
+
+* rearrange columns with `everything()`
+
+
+```r
+penguins %&gt;% 
+  select(island, bill_length_mm, everything()) %&gt;% 
+  head()
+```
+
+```
+## # A tibble: 6 x 8
+##   island bill_length_mm species bill_depth_mm
+##   &lt;fct&gt;           &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;
+## 1 Torge~           39.1 Adelie           18.7
+## 2 Torge~           39.5 Adelie           17.4
+## 3 Torge~           40.3 Adelie           18  
+## 4 Torge~           NA   Adelie           NA  
+## 5 Torge~           36.7 Adelie           19.3
+## 6 Torge~           39.3 Adelie           20.6
+## # ... with 4 more variables:
+## #   flipper_length_mm &lt;int&gt;,
+## #   body_mass_g &lt;int&gt;, sex &lt;fct&gt;, year &lt;int&gt;
+```
+
+---
+class: center, middle
+
+# `mutate()`
+
+---
+# Make columns with `mutate()`
+
+* Make `bill_total` as the sum of the two columns.
+
+
+```r
+penguins %&gt;% 
+  select(species, bill_length_mm, bill_depth_mm) %&gt;% 
+  mutate(bill_total = bill_length_mm + bill_depth_mm) %&gt;% 
+  head()
+```
+
+```
+## # A tibble: 6 x 4
+##   species bill_length_mm bill_depth_mm
+##   &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Adelie            39.1          18.7
+## 2 Adelie            39.5          17.4
+## 3 Adelie            40.3          18  
+## 4 Adelie            NA            NA  
+## 5 Adelie            36.7          19.3
+## 6 Adelie            39.3          20.6
+## # ... with 1 more variable: bill_total &lt;dbl&gt;
+```
+
+---
+# Make columns with `mutate()`
+
+* You can use the mutated column to make another columns.
+
+
+```r
+penguins %&gt;% 
+  select(species, bill_length_mm, bill_depth_mm) %&gt;% 
+  mutate(bill_total = bill_length_mm + bill_depth_mm,
+         bill_average = bill_total/2) %&gt;% 
+  head()
+```
+
+```
+## # A tibble: 6 x 5
+##   species bill_length_mm bill_depth_mm
+##   &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Adelie            39.1          18.7
+## 2 Adelie            39.5          17.4
+## 3 Adelie            40.3          18  
+## 4 Adelie            NA            NA  
+## 5 Adelie            36.7          19.3
+## 6 Adelie            39.3          20.6
+## # ... with 2 more variables:
+## #   bill_total &lt;dbl&gt;, bill_average &lt;dbl&gt;
+```
+
+---
+# Make columns with `transmute()`
+
+* When you want to get a seperate dataframe from the mutation,
+
+
+```r
+penguins %&gt;% 
+  select(species, bill_length_mm, bill_depth_mm) %&gt;% 
+  transmute(bill_total = bill_length_mm + bill_depth_mm,
+         bill_average = bill_total/2) %&gt;% 
+  head()
+```
+
+```
+## # A tibble: 6 x 2
+##   bill_total bill_average
+##        &lt;dbl&gt;        &lt;dbl&gt;
+## 1       57.8         28.9
+## 2       56.9         28.4
+## 3       58.3         29.2
+## 4       NA           NA  
+## 5       56           28  
+## 6       59.9         30.0
+```
+
+---
+class: center, middle
+
+# `arrange()`
+
+---
+# `arrange()` data
+
+arrange based on `bill_length_mm`
+
+
+```r
+penguins %&gt;% 
+  select(species, bill_length_mm, bill_depth_mm) %&gt;% 
+  mutate(bill_length_mm = ceiling(bill_length_mm),
+         bill_depth_mm = ceiling(bill_depth_mm)) %&gt;% 
+  arrange(bill_length_mm)
+```
+
+```
+## # A tibble: 344 x 3
+##    species bill_length_mm bill_depth_mm
+##    &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Adelie              33            16
+##  2 Adelie              34            19
+##  3 Adelie              34            18
+##  4 Adelie              34            17
+##  5 Adelie              35            19
+##  6 Adelie              35            22
+##  7 Adelie              35            19
+##  8 Adelie              35            18
+##  9 Adelie              35            19
+## 10 Adelie              35            18
+## # ... with 334 more rows
+```
+
+---
+# `arrange()` data
+
+add another reference column `bill_depth_mm`
+
+
+```r
+penguins %&gt;% 
+  select(species, bill_length_mm, bill_depth_mm) %&gt;% 
+  mutate(bill_length_mm = ceiling(bill_length_mm),
+         bill_depth_mm = ceiling(bill_depth_mm)) %&gt;% 
+  arrange(bill_length_mm, bill_depth_mm)
+```
+
+```
+## # A tibble: 344 x 3
+##    species bill_length_mm bill_depth_mm
+##    &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Adelie              33            16
+##  2 Adelie              34            17
+##  3 Adelie              34            18
+##  4 Adelie              34            19
+##  5 Adelie              35            18
+##  6 Adelie              35            18
+##  7 Adelie              35            18
+##  8 Adelie              35            19
+##  9 Adelie              35            19
+## 10 Adelie              35            19
+## # ... with 334 more rows
+```
+
+---
+# `arrange()` data
+
+Sort `bill_depth_mm` column in descending order.
+
+
+```r
+penguins %&gt;% 
+  select(species, bill_length_mm, bill_depth_mm) %&gt;% 
+  mutate(bill_length_mm = ceiling(bill_length_mm),
+         bill_depth_mm = ceiling(bill_depth_mm)) %&gt;% 
+  arrange(bill_length_mm, desc(bill_depth_mm))
+```
+
+```
+## # A tibble: 344 x 3
+##    species bill_length_mm bill_depth_mm
+##    &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Adelie              33            16
+##  2 Adelie              34            19
+##  3 Adelie              34            18
+##  4 Adelie              34            17
+##  5 Adelie              35            22
+##  6 Adelie              35            19
+##  7 Adelie              35            19
+##  8 Adelie              35            19
+##  9 Adelie              35            18
+## 10 Adelie              35            18
+## # ... with 334 more rows
+```
+
+---
+class: center, middle
+
+# `summarize()`
+
+---
+# Smart summary with `summarize()`
+
+
+```r
+penguins %&gt;% 
+  summarize(bill_length_mean = mean(bill_length_mm,  na.rm = TRUE),
+            bill_depth_mean = mean(bill_depth_mm, na.rm = TRUE))
+```
+
+```
+## # A tibble: 1 x 2
+##   bill_length_mean bill_depth_mean
+##              &lt;dbl&gt;           &lt;dbl&gt;
+## 1             43.9            17.2
+```
+
+---
+# `summarize()` with `group_by()`
+
+
+```r
+penguins %&gt;% 
+  group_by(species) %&gt;% 
+  summarize(bill_length_mean = mean(bill_length_mm,  na.rm = TRUE),
+            bill_depth_mean = mean(bill_depth_mm, na.rm = TRUE))
+```
+
+```
+## `summarise()` ungrouping output (override with `.groups` argument)
+```
+
+```
+## # A tibble: 3 x 3
+##   species   bill_length_mean bill_depth_mean
+##   &lt;fct&gt;                &lt;dbl&gt;           &lt;dbl&gt;
+## 1 Adelie                38.8            18.3
+## 2 Chinstrap             48.8            18.4
+## 3 Gentoo                47.5            15.0
+```
+
+---
+class: center, middle
+
+# `across()`
+
+---
+# `across()`
+
+Apply a function **across** to columns. Useful with `summarise()` and `mutate()`. 
+
+* Previously, we use the `summarize()` to get the summary.
+
+
+```r
+penguins %&gt;% 
+  group_by(species) %&gt;% 
+  summarize(
+    bill_length_mean = mean(bill_length_mm,  na.rm = TRUE),
+    bill_depth_mean = mean(bill_depth_mm, na.rm = TRUE),
+    flipper_length_mm = mean(bill_depth_mm, na.rm = TRUE)
+  )
+```
+
+```
+## # A tibble: 3 x 4
+##   species bill_length_mean bill_depth_mean
+##   &lt;fct&gt;              &lt;dbl&gt;           &lt;dbl&gt;
+## 1 Adelie              38.8            18.3
+## 2 Chinst~             48.8            18.4
+## 3 Gentoo              47.5            15.0
+## # ... with 1 more variable:
+## #   flipper_length_mm &lt;dbl&gt;
+```
+
+---
+# `across()`
+
+Apply the same function across to the columns as follows:
+
+
+```r
+penguins %&gt;% 
+  group_by(species) %&gt;% 
+  summarize(across(bill_length_mm:flipper_length_mm, mean, na.rm = TRUE))
+```
+
+```
+## # A tibble: 3 x 4
+##   species bill_length_mm bill_depth_mm
+##   &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Adelie            38.8          18.3
+## 2 Chinst~           48.8          18.4
+## 3 Gentoo            47.5          15.0
+## # ... with 1 more variable:
+## #   flipper_length_mm &lt;dbl&gt;
+```
+
+---
+# `across()`
+
+`across()` works well with other functions in `dplyr`. For example,
+
+
+```r
+penguins %&gt;% 
+  group_by(species) %&gt;% 
+  summarize(across(bill_length_mm:flipper_length_mm, mean, na.rm = TRUE))
+```
+
+```
+## # A tibble: 3 x 4
+##   species bill_length_mm bill_depth_mm
+##   &lt;fct&gt;            &lt;dbl&gt;         &lt;dbl&gt;
+## 1 Adelie            38.8          18.3
+## 2 Chinst~           48.8          18.4
+## 3 Gentoo            47.5          15.0
+## # ... with 1 more variable:
+## #   flipper_length_mm &lt;dbl&gt;
+```
+
+---
+class: center, middle
+
+# What's beyond?
+
+![](https://memegenerator.net/img/instances/67791412.jpg)
+
+---
+class: center, middle
+
+# Grammar of Graphics `ggplot2`
+
+![](https://ggplot2.tidyverse.org/logo.png)
+
+---
+# The Grammar of Graphics
+
+* Understand quantitative plots as we intuitively understand grammar in language.
+
+&gt; The *quick brown* **fox** `jumps over` the *lazy* **dog**.
+
+* Sentences are elegant compositions of carefully-chosen grammatical elements that convey precise and clear messages.
+
+![](ggplot.png)
+
+
+---
+## Grammar of Graphics - Essentials
+
+
+.pull-left[
+
+
+```r
+library(ggplot2)
+p &lt;- ggplot(data = penguins)
+p
+```
+
+![](lec2_files/figure-html/data-base-1.png)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+
+**Data**
+
+The source of information for your visualization.
+
+`ggplot()` requires your data to be `data.frame` or `tibble`, also it should be 'tidy' data set.
+
+* Every variable has a column
+* Every observation has a row
+]
+
+---
+# aesthetics
+
+.pull-left[
+
+
+```r
+p &lt;- ggplot(data = penguins,
+            aes(x = bill_length_mm,
+                y = bill_depth_mm))
+p   
+```
+
+* mapping variables in dataset to `x` and `y` components in the ggplot.
+
+* There are many aesthetics;
+
+  - x, y: x and y axes
+  - alpha: degree of transparency
+  - color, fill
+  - shape, size
+  - etc.
+]
+.pull-right[
+![](lec2_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+
+]
+
+
+---
+# geom layer
+
+.pull-left[
+
+
+```r
+p &lt;- p + 
+    geom_point(aes(color = as_factor(species), 
+                   size = body_mass_g,
+                   alpha = 0.7))
+p
+```
+
+* scatter plot is consists of geometric points
+
+]
+.pull-right[
+![](lec2_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+
+]
+---
+# Combination: `aes()` + `geom()`
+
+There are many combination you can make with these two;
+
+.pull-left[
+
+
+```r
+# Method 1 
+ggplot(data = penguins,
+       aes(x = body_mass_g, 
+           y = bill_length_mm))
+
+# Method 2
+ggplot(data = penguins) +
+  geom_point(aes(x = body_mass_g, 
+           y = bill_length_mm))
+
+# Method 3
+ggplot() +
+  geom_point(data = penguins,
+         aes(x = body_mass_g, 
+           y = bill_length_mm))
+```
+
+]
+.pull-right[
+
+* Method 1: Best when using one data set and one aesthetic mapping
+
+* Method 2: Best when using one data set, and multiple geoms + aesthetic mappings
+
+* Method 3: Best when using multiple data sets, and multiple geoms + aesthetic mappings
+
+]
+
+.footnote[p.15 of slide by [Ijeamakaanyene's intro-to-ggplot2](https://github.com/Ijeamakaanyene/intro-to-ggplot2)]
+
+---
+class: middle, center
+
+# Play with it!
+
+---
+# scales
+
+Finalize your aesthetic with the data property
+
+.pull-left[
+
+
+```r
+p + scale_y_continuous(
+  "Bill depth (mm)",
+  breaks = seq(0, 30, by = 1)
+)
+```
+
+Syntax: `scale_&lt;aes&gt;_&lt;type&gt;()`
+
+- Change Label, Breaks, Limits, etc.
+
+- `scale_color_continuous()` related to change your color for continuous variables.
+
+
+]
+.pull-right[
+
+
+```
+## Warning: Removed 2 rows containing missing values
+## (geom_point).
+```
+
+&lt;img src="lec2_files/figure-html/unnamed-chunk-34-1.png" width="80%" /&gt;
+
+]
+---
+# color
+
+You can set the colors using palette or manually.
+
+.pull-left[
+
+
+```r
+p &lt;- p + 
+    scale_color_brewer(palette = "Set1",
+                       labels = c("myAdele", "myChinstrap", "myGentoo"))
+p
+```
+
+* Available palette
+
+`BrBG, PiYG, PRGn, PuOr, RdBu, RdGy, RdYlBu, RdYlGn, Spectral, Accent, Dark2, Paired, Pastel1, Pastel2, Set1, Set2, Set3`
+
+
+]
+.pull-right[
+
+![](lec2_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+
+]
+
+---
+# Confirm your setting
+
+.pull-left[
+
+
+```r
+p &lt;- p + 
+    scale_alpha_identity() +
+    scale_size_identity()
+p
+```
+
+* `alpha` was set at 0.7 but, it was not the actual 70% transparency.
+
+* `size` is also identified with the function.
+
+]
+.pull-right[
+
+![](lec2_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
+
+]
+
+---
+# legend
+
+.pull-left[
+
+
+```r
+my_species &lt;- guide_legend(title = "Species", ncol = 3)
+
+p &lt;- p + 
+  guides(color = my_species) +
+  theme(legend.position = "bottom")
+p
+```
+
+]
+.pull-right[
+
+&lt;img src="lec2_files/figure-html/unnamed-chunk-40-1.png" width="80%" /&gt;
+
+
+]
+
+
+---
+# facets
+
+.pull-left[
+
+
+```r
+p &lt;- p + facet_wrap(vars(island))
+p 
+```
+
+* facet makes multiple plots w.r.t. variables.
+
+]
+.pull-right[
+![](lec2_files/figure-html/unnamed-chunk-42-1.png)&lt;!-- --&gt;
+
+]
+
+---
+# Title, subtitle, and captions
+
+.pull-left[
+
+
+```r
+p &lt;- p + labs(title = "Visualization of palmer penguins", 
+     subtitle = "Bill length vs depth by species",
+     x = "bill length", y = "bill depth",
+     caption = "https://theissaclee.com")
+p
+```
+
+]
+.pull-right[
+
+![](lec2_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
+
+
+]
+
+---
+# ggrepel package
+
+.pull-left[
+
+
+```r
+library(ggrepel)
+
+mypoints &lt;- penguins %&gt;% 
+  filter(bill_depth_mm &gt; 20, bill_length_mm &gt; 40)
+
+p &lt;- p + 
+  geom_label_repel(
+    data = mypoints,
+    aes(x = bill_length_mm,
+        y = bill_depth_mm,
+        label = paste("(",bill_length_mm, ", ",bill_depth_mm,")")),
+    color = "black",
+    size = 2)
+p
+```
+
+]
+.pull-right[
+
+![](lec2_files/figure-html/unnamed-chunk-46-1.png)&lt;!-- --&gt;
+
+
+
+]
+
+---
+# aspect ratio
+
+.pull-left[
+
+```r
+tibble(x = 1:10, y = 2*x) %&gt;% 
+  ggplot(aes(x = x, y = y)) +
+  geom_line() + coord_fixed()
+```
+
+]
+.pull-right[
+&lt;img src="lec2_files/figure-html/unnamed-chunk-48-1.png" width="90%" /&gt;
+
+]
+
+
+---
+# theme
+
+`ggplot2` has a lot of [theme](https://ggplot2.tidyverse.org/reference/ggtheme.html). It has even a theme package.
+
+.pull-left[
+
+
+```r
+p + theme_bw()
+```
+
+* check out `ggthemr` package
+
+]
+.pull-right[
+
+![](lec2_files/figure-html/unnamed-chunk-50-1.png)&lt;!-- --&gt;
+
+]
+
+---
+# Box plot
+
+
+```r
+ggplot(penguins, aes(y = body_mass_g)) +
+  geom_boxplot()
+```
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="lec2_files/figure-html/boxplot1-1.png" alt="One single boxplot" width="30%" /&gt;
+&lt;p class="caption"&gt;One single boxplot&lt;/p&gt;
+&lt;/div&gt;
+---
+# Box plot by species
+
+
+```r
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot()
+```
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="lec2_files/figure-html/boxplot2-1.png" alt="One single boxplot" width="30%" /&gt;
+&lt;p class="caption"&gt;One single boxplot&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Box plot by species
+
+The plot is flipped. Why?
+
+
+```r
+ggplot(penguins, aes(x = body_mass_g, y = species)) +
+  geom_boxplot()
+```
+
+&lt;img src="lec2_files/figure-html/boxplot3-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+# Box plot by species
+
+Add actual values.
+
+
+```r
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot(outlier.shape = NA) + geom_jitter(width = 0.2)
+```
+
+&lt;img src="lec2_files/figure-html/boxplot4-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+# Box plot with continuous variables
+
+You can draw the boxplot using continuous variables
+
+
+```r
+ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) + geom_boxplot()
+```
+
+&lt;img src="lec2_files/figure-html/boxplot5-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+# Box plot with continuous variables
+
+You can draw the boxplot using continuous variables
+
+
+```r
+ggplot(penguins, aes(x = bill_length_mm, y = body_mass_g)) + 
+  geom_boxplot(aes(group = cut_width(bill_length_mm, 5)))
+```
+
+&lt;img src="lec2_files/figure-html/boxplot6-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+# Bar chart
+
+
+```r
+ggplot(penguins, aes(y = species)) +
+  geom_bar()
+```
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="lec2_files/figure-html/barchart-1.png" alt="Bar chart" width="30%" /&gt;
+&lt;p class="caption"&gt;Bar chart&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Bar chart with `fct_reorder`
+
+
+```r
+penguins %&gt;% 
+  count(species) %&gt;% 
+  ggplot(aes(x = n, y = fct_reorder(species, n))) +
+  geom_col()
+```
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="lec2_files/figure-html/barchart2-1.png" alt="Bar chart" width="30%" /&gt;
+&lt;p class="caption"&gt;Bar chart&lt;/p&gt;
+&lt;/div&gt;
+
+---
+# Reference
+
+* https://dplyr.tidyverse.org/
+
+* https://ggplot2.tidyverse.org/
+
+* https://ijeamaka-anyene.netlify.app/posts/2020-10-22-workshop-an-introduction-to-ggplot2/
+
+
+
+---
+class: center, middle
+
+# Thanks!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
