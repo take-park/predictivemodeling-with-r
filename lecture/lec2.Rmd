@@ -215,6 +215,10 @@ sum(1:10)
 
 1:10 %>% sum()
 ```
+---
+# Use it to make your code readable
+
+[![](pipetweet.png){width="70%"}](https://twitter.com/andrewheiss/status/1359583543509348356)
 
 ---
 class: center, middle
