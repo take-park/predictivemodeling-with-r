@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Lecture 4 - Linear models</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Issac Lee" />
+    <meta name="date" content="2021-03-11" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Lecture 4 - Linear models
+## Linear regression
+### Issac Lee
+### 2021-03-11
+
+---
+
+
+
+
+
+
+class: center, middle
+
+# Sungkyunkwan University
+
+![](https://upload.wikimedia.org/wikipedia/en/thumb/4/40/Sungkyunkwan_University_seal.svg/225px-Sungkyunkwan_University_seal.svg.png)
+
+## Actuarial Science
+
+---
+class: center, middle, inverse
+
+
+# Linear models
+
+---
+class: center, middle
+
+
+# Matrix theory
+
+## Definitions and results
+
+---
+# Matrix
+
+`\(\mathbf{A}_{n\times m} = [a_{ij}]\)` is a rectangular array of elements.
+
+* Demension of `\(\mathbf{A}\)`: `\(n\)` (rows) by `\(m\)` (columns)
+
+* Square matrix if `\(n = m\)`.
+
+* A vector `\(\mathbf{a}_{n\times1} = [a_i]\)` is a matrix consisting of one `column`.
+
+* Our interests is on real matrices: whose elements are real numbers.
+
+---
+# Transpose
+
+If `\(\mathbf{A}_{n\times m} = [a_{ij}]\)` is `\(n \times m\)`, the transpose of `\(\mathbf{A}\)`, `\(\mathbf{A}^T\)` is `\(m \times n\)` matrix `\([a_{ji}]\)`.
+
+* Symmetric if `\(\mathbf{A} = \mathbf{A}^T\)`
+
+** Propsition 1** If `\(\mathbf{A}\)` is `\(n \times m\)` and `\(\mathbf{B}\)` is `\(m \times n\)`, the `\((\mathbf{A}\mathbf{B})^T=\mathbf{B}^T\mathbf{A}^T\)`
+
+T.B.D
+
+---
+# Simple linear regression
+
+* Response variable `\(y_i\)` is linearly related to an independent variable `\(x_i\)`, given by
+
+`$$y_{i}=\beta_{1}+\beta_{2}x_{i}+e_{i}, \quad i=1,...,n$$`
+
+where `\(e_{1},...,e_{n}\)` are typically assumed to be uncorrelated random variables with mean zero and constrant variance `\(\sigma^{2}\)`.
+
+`$$\mathbf{y}=\left(\begin{array}{c}
+y_{1}\\
+y_{2}\\
+...\\
+y_{n}
+\end{array}\right),\boldsymbol{X}\beta=\left(\begin{array}{cc}
+1 &amp; x_{1}\\
+1 &amp; x_{2}\\
+... &amp; ...\\
+1 &amp; x_{n-1}\\
+1 &amp; x_{n}
+\end{array}\right)\left(\begin{array}{c}
+\beta_{1}\\
+\beta_{2}
+\end{array}\right),\boldsymbol{e}=\left(\begin{array}{c}
+e_{1}\\
+e_{2}\\
+...\\
+e_{n}
+\end{array}\right)$$`
+
+---
+# Multiple linear regression
+
+Response variable `\(y_i\)` is linearly related to `\(p\)` independent variables `\(x_{ij}\)`s, given by
+
+`$$y_{i}=\beta_{1}x_{i1}+\beta_{2}x_{i2}+...+\beta_{p}x_{ij}+e_{i}, \quad i=1,...,n, j=1,...,p$$`
+which is the same as
+
+`$$y_{i}=\mathbf{x}_{i}^{T}\boldsymbol{\beta}+e_{i},\quad i=1,...,n$$`
+
+where
+
+`$$\begin{array}{c}
+\mathbf{x}_{1}^{T}=\left(x_{11},...,x_{1p}\right),\\
+...\\
+\mathbf{x}_{n}^{T}=\left(x_{n1},...,x_{np}\right),
+\end{array} \quad \boldsymbol{\beta}=\left(\begin{array}{c}
+\beta_{1}\\
+...\\
+\beta_{p}
+\end{array}\right)$$`
+
+---
+# Multiple linear regression
+
+We assume
+
+`$$\mathbb{E}\left(\boldsymbol{e}\right)=\boldsymbol{0},Var\left(\boldsymbol{e}\right)=\sigma^{2}I_{n}$$`
+
+where `\(I_n\)` is an identity matrix size of `\(n\)`.
+
+
+---
+# Regression problem
+
+Linear model problem can be viewed as a best approximation `\(\mathbf{X}\beta\)` to the observed `\(\mathbf{y}\)`.
+
+* If we define closeness or distance in Euclidean manner, then the problem becomes to find a value of the vector `\(\beta\)` that minimizes `\(L(\beta)\)` as follows;
+
+`$$\begin{align*}
+L\left(\beta\right) &amp; =\left(\mathbf{y}-\boldsymbol{X}\beta\right)^{T}\left(\mathbf{y}-\boldsymbol{X}\beta\right)\\
+ &amp; =\left\Vert \mathbf{y}-\boldsymbol{X}\beta\right\Vert ^{2}
+\end{align*}$$`
+
+* Solution: Find the gradient vector of `\(L(\beta)\)` and set it equals to zero.
+
+`$$\frac{\partial L}{\partial\beta}=\left(\begin{array}{c}
+\frac{\partial L}{\partial\beta_{1}}\\
+...\\
+\frac{\partial L}{\partial\beta_{p}}
+\end{array}\right)$$`
+
+
+---
+# Practice
+
+Find `\(\frac{\partial f}{\partial \beta}\)`
+
+`$$f\left(\beta\right)=\beta_{1}x_{1}+\beta_{2}x_{2}$$`
+Find `\(\frac{\partial g}{\partial \beta}\)`
+
+`$$g\left(\beta\right)=\beta_{1}^{2}+4\beta_{1}\beta_{2}+3\beta_{2}^{2}$$`
+
+
+
+---
+class: middle, center, inverse
+
+# Thanks!
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
