@@ -1,0 +1,610 @@
+---
+title: "Lecture 3 - Data manipulation"
+subtitle: "`tidyverse` intro. 2"  
+author: 
+  - "Issac Lee"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(tidyverse)
+library(reticulate)
+library(xaringanthemer)
+style_duo_accent(
+  text_font_size = "1.3rem",
+  footnote_font_size = "0.6em",
+  footnote_position_bottom = "20px",
+  primary_color = "#7dad47",
+  secondary_color = "#01467f",
+  inverse_header_color = "#FFFFFF",
+  code_font_google   = google_font("Fira Mono")
+)
+```
+
+class: center, middle
+
+# Sungkyunkwan University
+
+![](https://upload.wikimedia.org/wikipedia/en/thumb/4/40/Sungkyunkwan_University_seal.svg/225px-Sungkyunkwan_University_seal.svg.png)
+
+## Actuarial Science
+
+---
+class: center, middle
+
+
+# Part 2: Dive into tidyverse
+
+---
+class: center, middle
+
+
+# tibble
+
+---
+# tibble - morden reinterpretation of the `data.frame`
+
+.pull-left[
+
+```{r}
+as_tibble(mtcars)
+```
+
+]
+.pull-right[
+
+```{r}
+tibble(x = 1:2, y = 1, z = x^2 + y)
+tribble(
+  ~x, ~y,  ~z,
+  "a", 2,  3.6
+)
+```
+
+
+]
+
+
+---
+# tibble vs. dataframe
+
+* Looks similar but they are different
+
+* Two main differences: printing, and subsetting.
+
+.pull-left[
+
+```{r}
+mtcars <- mtcars %>% head()
+class(mtcars)
+mtcars
+```
+
+]
+.pull-right[
+
+```{r}
+as_tibble(mtcars)
+```
+
+
+]
+
+---
+# tibble - strict about subsetting
+
+* You cannot access to a variable that doesn't exist.
+
+.pull-left[
+
+```{r}
+mtcars %>% names()
+my_df <- mtcars[,1:5]
+my_df$dis # ?? we don't have dis variable..
+```
+
+]
+.pull-right[
+
+```{r}
+my_tb <- mtcars[,1:5] %>% as_tibble()
+my_tb$dis # yes! we don't have dis variable!
+```
+
+]
+
+---
+# tibble - more precise about return values
+
+* Sometimes `R` is too much kind.
+
+.pull-left[
+
+* convert dataframe into vector automatically
+
+```{r}
+class(my_df[,1])
+my_df[,1]
+```
+
+]
+.pull-right[
+
+* That's nope! in `tibble`
+
+```{r}
+class(my_tb[,1])
+my_tb[,1]
+```
+
+]
+
+---
+# tibble - return value
+
+* `[` returns `tibble`, `[[` returns `vector` always
+
+.pull-left[
+
+```{r}
+my_tb[,1]
+```
+
+]
+.pull-right[
+
+```{r}
+my_tb[[1]]
+```
+
+]
+---
+# list dataframe
+
+* Do you know list can be part of the data.frame?
+
+* This will be useful, when you work with `purrr`.
+
+.pull-left[
+
+```{r}
+my_df$cyl <- list(9, 10:11, 12:14, "text", as.factor("a"), as.factor("b"))
+my_df
+```
+
+]
+.pull-right[
+
+```{r}
+my_tb$cyl <- list(9, 10:11, 12:14, "text", as.factor("a"), as.factor("b"))
+my_tb
+```
+
+]
+
+---
+class: middle, center
+
+# tidyr
+
+---
+# Example
+
+* tibble which is not a `tidydata`
+
+```{r}
+tibble_wide <- tribble(
+  ~name,        ~gender,  ~party,       ~"2019",  ~"2020",  ~"2021", 
+  "Bomi Kim",   "female",  "opposition",  48.01,    56.99,    57.43,
+  "Issac Lee",  "male",    "ruling",      47.85,    30.92,    42.20,
+  "Soony Kim",  "female",  "ruling",      33.49,    41.86,    44.54, 
+  "Jelly Lee",  "female",  "opposition",  42.35,    32.20,    40.19        
+)
+```
+
+---
+# `pivot_longer()` intuition
+
+
+![](https://education.rstudio.com/blog/2020/07/teaching-the-tidyverse-in-2020-part-3-data-wrangling-and-tidying/img/tidyr-longer-wider.gif)
+
+---
+# Graph with year vs approval rating
+
+```{r}
+tibble_wide %>% 
+  pivot_longer(
+    cols = "2019":"2021",
+    names_to = "year",
+    values_to = "approval_rating"
+  )
+```
+
+---
+# `pivot_longer()` and ggplot comb.
+
+.pull-left[
+```{r eval=FALSE}
+tibble_wide %>% 
+  pivot_longer(
+    cols = "2019":"2021",
+    names_to = "year",
+    values_to = "approval_rating"
+  ) %>% 
+  ggplot(aes(x = year,
+             y = approval_rating, 
+             group = name,
+             color = name)) +
+  geom_path()
+```
+]
+.pull-right[
+```{r echo=FALSE}
+tibble_wide %>% 
+  pivot_longer(
+    cols = "2019":"2021",
+    names_to = "year",
+    values_to = "approval_rating"
+  ) %>% 
+  ggplot(aes(x = year,
+             y = approval_rating,
+             group = name,
+             color = name)) +
+  geom_path()
+```
+
+]
+
+---
+# `pivot_wider()`
+
+```{r}
+tibble_long <- tibble_wide %>% 
+  pivot_longer(
+    cols = "2019":"2021",
+    names_to = "year",
+    values_to = "approval_rating"
+  )
+tibble_long %>% 
+  pivot_wider(names_from = year,
+              values_from = approval_rating)
+```
+
+---
+# `rowwise()` and `c_across()` combo.
+
+
+```{r }
+tibble_wide <- tibble_wide %>%
+  rowwise() %>%
+  mutate(average = mean(c_across("2019":"2021")))
+
+tibble_wide
+```
+
+---
+class: center, middle
+
+
+# purrr
+
+---
+# Two important iteration paradigms
+
+* Imperative programming: Loop, while loops..
+
+  - Good side: Great place to start, Explicit and obvious
+  
+  - Bad side: Verbose, duplication
+
+* Functional programming
+
+  - Compact, fewer errors
+  
+  - Not for the beginners. :)
+
+---
+# Functional
+
+* Function of functions
+
+.pull-left[
+
+```{r}
+odd_sum <- function(vec){
+    sum(c(vec)[as.logical(vec %% 2)])
+}
+odd_sum(1:100)
+odd_mean <- function(vec){
+    mean(c(vec)[as.logical(vec %% 2)])
+}
+odd_mean(1:100)
+```
+]
+.pull-right[
+```{r}
+odd_functional <- function(vec, fun){
+    fun(c(vec)[as.logical(vec %% 2)])
+}
+
+odd_functional(1:100, sum)
+odd_functional(1:100, mean)
+```
+]
+
+---
+# `purrr` is FP toolkit in `tidyverse`
+
+* `base` package has `apply`, `lapply`, ...
+
+* `purrr` is more consistent, once you understand you can expect its behavior better.
+
+    - `map()` results a list.
+    - `map_lgl()` results a logical vector.
+    - `map_int()` results an integer vector.
+    - `map_dbl()` results a double vector.
+    - `map_chr()` results a character vector.
+    
+---
+# `map()` basic
+
+.pull-left[
+```{r}
+df <- tibble(
+  a = rnorm(4),
+  b = rnorm(4),
+  c = rnorm(4),
+  d = rnorm(4)
+)
+df
+```
+]
+.pull-right[
+
+* List result
+
+```{r}
+map(df, mean)
+```
+
+]
+
+---
+# `map_<result>`
+
+* `result` should match with expectation 
+
+* This behavior is actually good for us!
+
+.pull-left[
+```{r}
+map_dbl(df, mean)
+map_df(df, mean)
+```
+
+]
+.pull-right[
+
+```{r error=TRUE}
+map_int(df, mean)
+map_chr(df, mean)
+```
+]
+
+---
+# the `purrr` verse
+
+We have two things to remember;
+
+* `~`: function 
+* `.`: current list element 
+
+.pull-left[
+
+```{r}
+map_dbl(df, function(df){ sqrt(mean(df)^2 + 3)})
+```
+
+]
+.pull-right[
+
+```{r}
+map_dbl(df, ~sqrt(mean(.)^2 + 3))
+```
+
+]
+
+---
+# `split()` and `map()` comb.
+
+```{r}
+library(palmerpenguins)
+
+penguins %>% 
+    split(.$species) %>% 
+    map(~lm(bill_length_mm ~ bill_depth_mm, data = .))
+```
+
+---
+# Nested data - important!
+
+* dataframes in `dataframe`!
+
+* Why is this important?
+
+.pull-left[
+
+```{r}
+nested_df <- penguins %>% 
+    group_by(species) %>% 
+    nest() %>% ungroup(species)
+nested_df
+```
+
+]
+.pull-right[
+```{r}
+nested_df[[2]][[1]] %>% head()
+```
+
+]
+
+---
+# let's `purrr` functions to this nested data
+
+```{r}
+nested_df %>% 
+    mutate(model = map(data, ~lm(bill_length_mm~bill_depth_mm, data = .)))
+```
+
+---
+# let's `purrr` functions to this nested data
+
+```{r}
+nested_df %>% 
+    mutate(model = map(data, ~lm(bill_length_mm~bill_depth_mm, data = .))) %>% 
+    transmute(species, map_df(model, ~summary(.)$coefficients[,1]))
+```
+
+---
+# map2() - Example 1
+
+* Loops using two arguments
+
+.pull-left[
+```{r}
+mu_vec <- 1:5 * 3
+sigma_vec <- 1:5 * 2
+n <- sample(1:10, 5)
+mu_vec
+sigma_vec
+n
+```
+
+]
+.pull-right[
+
+```{r}
+map2(n, mu_vec, rnorm, sd = sigma_vec)
+
+```
+
+]
+
+---
+# map2() - Example 2
+
+* Apply to nested data!
+
+.pull-left[
+
+```{r message=FALSE}
+library(magrittr)
+
+nested_df %<>% 
+    mutate(model = map(data, ~lm(bill_length_mm~bill_depth_mm, data = .))) 
+nested_df
+```
+
+
+]
+.pull-right[
+
+```{r }
+nested_df %>% 
+    mutate(prediction = 
+        map2(model, data, predict))
+```
+
+
+]
+
+
+
+---
+# Let's `walk()` together
+
+* What if we don't want to have data?
+
+* Just want to do something like plotting or write files.
+
+```{r}
+plot_scatter <- function(df){
+    ggplot(df, aes(x = bill_length_mm, 
+                   y = bill_depth_mm)) +
+        geom_point()
+}
+penguins %>% 
+    split(.$species) %>% 
+    map(plot_scatter) -> plots
+```
+
+---
+# walk()
+
+* What's the diffence from ggplot facets?
+
+```{r, warning=FALSE, out.width="25%"}
+walk(plots, print)
+```
+
+
+---
+# Split the file
+
+```{r eval=FALSE}
+penguins %>%
+  group_by(species) %>%
+  group_walk(~ write_csv(.x, paste0("data/", .y$species, ".csv")))
+```
+
+---
+# Read data
+
+.pull-left[
+```{r message=FALSE}
+library(fs)
+
+files <- dir_ls(path = "data", glob = "*csv")
+files
+
+adelie    <- read_csv("data/Adelie.csv")
+chinstrap <- read_csv("data/Chinstrap.csv")
+gentoo    <- read_csv("data/Gentoo.csv")
+all_three <- bind_rows(adelie,
+                       chinstrap,
+                       gentoo, .id = "species")
+```
+
+]
+.pull-right[
+```{r}
+all_three %>% head()
+```
+
+]
+
+---
+# Read data with `map_dfr()`
+
+```{r message=FALSE}
+map_dfr(files, read_csv, .id = "species")
+```
+
+---
+class: middle, center, inverse
+
+# Thanks!
