@@ -4,7 +4,7 @@
     <title>Lecture 4 - Linear models</title>
     <meta charset="utf-8" />
     <meta name="author" content="Issac Lee" />
-    <meta name="date" content="2021-03-11" />
+    <meta name="date" content="2021-03-18" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Lecture 4 - Linear models
 ## Linear regression
 ### Issac Lee
-### 2021-03-11
+### 2021-03-18
 
 ---
 
@@ -163,6 +163,196 @@ Find `\(\frac{\partial g}{\partial \beta}\)`
 
 `$$g\left(\beta\right)=\beta_{1}^{2}+4\beta_{1}\beta_{2}+3\beta_{2}^{2}$$`
 
+---
+# Derivative rules
+
+Let `\(\mathbf{a}\)` and `\(\mathbf{b}\)` be `\(p\times 1\)` vectors and `\(\mathbf{A}\)`  be `\(p \times p\)` matrix of constants. Then,
+
+* `\(\frac{\partial \mathbf{a}^T\mathbf{b}}{\partial \mathbf{b}} = \mathbf{a}\)`
+
+* `\(\frac{\partial \mathbf{b}^T\mathbf{A}\mathbf{b}}{\partial \mathbf{b}} = (\mathbf{A} + \mathbf{A}^T) \mathbf{b}\)`
+
+What is the `\(\frac{\partial L}{\partial \beta} = ?\)`
+
+`$$\begin{align*}
+L\left(\beta\right) &amp; =\left(\mathbf{y}-\boldsymbol{X}\beta\right)^{T}\left(\mathbf{y}-\boldsymbol{X}\beta\right)\\
+ &amp; =\left\Vert \mathbf{y}-\boldsymbol{X}\beta\right\Vert ^{2}
+\end{align*}$$`
+
+---
+# Normal equation
+
+Setting the gradient to zero, we obtain Normal Equation;
+
+`$$\boldsymbol{X}^{T}\boldsymbol{X}\beta=\boldsymbol{X}^{T}\mathbf{y}$$`
+
+The solution of this equation is as follows;
+
+`$$\hat{\beta}=\left(\boldsymbol{X}^{T}\boldsymbol{X}\right)^{-1}\boldsymbol{X}^{T}\boldsymbol{y}$$`
+
+---
+# Food for thought
+
+Are we happy about this always?
+
+What is the problem?
+
+---
+# Gradient descent
+
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Gradient_descent.svg/525px-Gradient_descent.svg.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+`$${\displaystyle \mathbf{\beta} _{n+1}=\mathbf {\beta} _{n}-\gamma \nabla L(\mathbf {\beta} _{n})}$$`
+---
+# Linear Basis function models
+
+`$$f\left(x\right)=\sum_{j=0}^{M-1}\beta_{j}\phi_{j}\left(x\right)=\Phi\left(x\right)\beta$$`
+
+where `\(\phi_j(x)\)` are known as **basis functions**.
+
+typically, `\(\phi_{0}(x) = 1\)` so that `\(\beta_0\)` becomes a bias.
+
+---
+# Example of basis functions
+
+.pull-left[
+
+* Polynomial basis functions (global)
+`$$\phi_j(x)=x^j$$`
+
+* Gaussian basis (local)
+`$$\phi_j(x)=exp\left(-\frac{(x-\mu_j)^2}{2\sigma^2}\right)$$`
+]
+.pull-right[
+* Sigmoidal basis functions (local)
+
+`$$\phi_j(x)=\sigma\left(\frac{x-\mu_j}{s}\right)$$`
+where $$\sigma(x) = \frac{1}{1+exp(-x)} $$
+]
+
+
+---
+# Easy Example
+
+.pull-left[
+Polynomial Curve Fitting
+
+`$$y = sin(2 \pi x) + \epsilon$$`
+
+```
+## # A tibble: 10 x 2
+##        x      y
+##    &lt;dbl&gt;  &lt;dbl&gt;
+##  1  0.3   1.00 
+##  2  0.25  1.18 
+##  3  0.65 -0.806
+##  4  1     0.346
+##  5  0.55 -0.525
+##  6  0.15  0.754
+##  7  0.95 -0.273
+##  8  0.7  -0.649
+##  9  0.5   0.321
+## 10  0.9  -0.956
+```
+
+
+
+]
+.pull-right[
+![](lec4_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+]
+
+---
+# 0th order polynomial
+
+.pull-left[
+`\(f(x) = \beta_0\)`
+
+]
+.pull-right[
+
+![](lec4_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+]
+
+
+
+---
+# 1th order polynomial
+
+.pull-left[
+`\(f(x) = \beta_0 + \beta_1 x\)`
+
+]
+.pull-right[
+![](lec4_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+
+]
+
+
+
+---
+# 3th order polynomial
+
+.pull-left[
+`\(f(x) = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta x^3\)`
+
+]
+.pull-right[
+![](lec4_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+]
+
+
+---
+# Feel so good~! Let's do 9th!!
+
+.pull-left[
+
+Is this looks okay? Why?
+
+]
+.pull-right[
+![](lec4_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+]
+
+---
+# Avoid Over fitting: Regularization
+
+Consider the new loss function;
+
+`$$Loss=L\left(\beta;X\right)+\lambda R\left(\beta\right)$$`
+where the function `\(R\)` represents the regularization term.
+
+---
+# Ridge regression
+
+Ridge regression use `\(L_2\)` norm
+
+`$$\underset{\beta}{min}\left(y-X\beta\right)^{T}\left(y-X\beta\right)+\frac{\lambda}{2}\left\Vert \beta\right\Vert _{2}^{2}$$`
+
+H.W. What is the optimal `\(\beta_{\star}\)`?
+
+# Lasso regression
+
+Lasso regression use `\(L_1\)` norm
+
+`$$\underset{\beta}{min}\left(y-X\beta\right)^{T}\left(y-X\beta\right)+\frac{\lambda}{2}\left\Vert \beta\right\Vert _{1}$$`
+
+---
+# Elastic Net
+
+Why don't we have the both of the two?
+
+`$${\displaystyle {\hat {\beta }}\equiv {\underset {\beta }{\operatorname {argmin} }}(\|y-X\beta \|^{2}+\lambda _{2}\|\beta \|^{2}+\lambda _{1}\|\beta \|_{1}).}$$`
+The loss function can be parameterized with the two parameters; `\(\lambda\)`, `\(\alpha\)`
+
+* `\(\lambda\)` controls the magnitude
+* `\(\alpha\)` controls the weights of the two panalty functions
+
+`$$\underset{\beta}{min}\left(y-X\beta\right)^{T}\left(y-X\beta\right)+\frac{\lambda}{2}\left(\alpha\left\Vert \beta\right\Vert _{1}+\left(1-\alpha\right)\left\Vert \beta\right\Vert _{2}^{2}\right)$$`
 
 
 ---

@@ -1,0 +1,80 @@
+---
+title: "Kaggle housing"
+author: "Issac Lee"
+date: '2021 3 11 '
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(skimr)
+library(magrittr)
+
+train_path <- file.path(here::here(),"data/housingprice/train.csv")
+test_path <- file.path(here::here(),"data/housingprice/test.csv")
+
+train_data <- read_csv(train_path)
+test_data <- read_csv(test_path)
+```
+
+```{r}
+dim(train_data)
+dim(test_data)
+
+all_data <- bind_rows(train_data, test_data)
+skim(all_data)
+```
+
+
+
+```{r}
+names(train_data)
+
+train_data %<>% janitor::clean_names()
+
+result <- lm(sale_price ~ ., data = train_data)
+
+train_data %>% 
+    select_if(is.numeric)
+
+test_data %<>% janitor::clean_names()
+train_data %>% 
+    select(is.numeric())
+
+1. 손성만
+4. 태익
+5. 한별,
+
+2. 현섭,
+9. 우람
+11. 수연
+
+3. 원동,
+8. 상진
+10. 주한
+
+6. 영훈
+7. 원표
+
+sample(1:11, 11)
+```
+
+
+
+
+
+```{r}
+walmart_recipe <- train %>% 
+    recipe(sale_price ~ .) %>% 
+    step_dummy(all_nominal(), -all_outcomes()) %>%
+    step_normalize(-all_outcomes()) %>% 
+    prep()
+
+walmart_recipe %>% print()
+```
+
+

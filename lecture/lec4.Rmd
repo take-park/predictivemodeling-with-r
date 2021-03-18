@@ -173,6 +173,223 @@ Find $\frac{\partial g}{\partial \beta}$
 
 $$g\left(\beta\right)=\beta_{1}^{2}+4\beta_{1}\beta_{2}+3\beta_{2}^{2}$$
 
+---
+# Derivative rules
+
+Let $\mathbf{a}$ and $\mathbf{b}$ be $p\times 1$ vectors and $\mathbf{A}$  be $p \times p$ matrix of constants. Then,
+
+* $\frac{\partial \mathbf{a}^T\mathbf{b}}{\partial \mathbf{b}} = \mathbf{a}$
+
+* $\frac{\partial \mathbf{b}^T\mathbf{A}\mathbf{b}}{\partial \mathbf{b}} = (\mathbf{A} + \mathbf{A}^T) \mathbf{b}$
+
+What is the $\frac{\partial L}{\partial \beta} = ?$
+
+$$\begin{align*}
+L\left(\beta\right) & =\left(\mathbf{y}-\boldsymbol{X}\beta\right)^{T}\left(\mathbf{y}-\boldsymbol{X}\beta\right)\\
+ & =\left\Vert \mathbf{y}-\boldsymbol{X}\beta\right\Vert ^{2}
+\end{align*}$$
+
+---
+# Normal equation
+
+Setting the gradient to zero, we obtain Normal Equation;
+
+$$\boldsymbol{X}^{T}\boldsymbol{X}\beta=\boldsymbol{X}^{T}\mathbf{y}$$
+
+The solution of this equation is as follows;
+
+$$\hat{\beta}=\left(\boldsymbol{X}^{T}\boldsymbol{X}\right)^{-1}\boldsymbol{X}^{T}\boldsymbol{y}$$
+
+---
+# Food for thought
+
+Are we happy about this always?
+
+What is the problem?
+
+---
+# Gradient descent
+
+```{r gradient, echo=FALSE, fig.cap="", fig.align='center', out.width = '30%'}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Gradient_descent.svg/525px-Gradient_descent.svg.png")
+```
+
+$${\displaystyle \mathbf{\beta} _{n+1}=\mathbf {\beta} _{n}-\gamma \nabla L(\mathbf {\beta} _{n})}$$
+---
+# Linear Basis function models
+
+$$f\left(x\right)=\sum_{j=0}^{M-1}\beta_{j}\phi_{j}\left(x\right)=\Phi\left(x\right)\beta$$
+
+where $\phi_j(x)$ are known as **basis functions**.
+
+typically, $\phi_{0}(x) = 1$ so that $\beta_0$ becomes a bias.
+
+---
+# Example of basis functions
+
+.pull-left[
+
+* Polynomial basis functions (global)
+$$\phi_j(x)=x^j$$
+
+* Gaussian basis (local)
+$$\phi_j(x)=exp\left(-\frac{(x-\mu_j)^2}{2\sigma^2}\right)$$
+]
+.pull-right[
+* Sigmoidal basis functions (local)
+
+$$\phi_j(x)=\sigma\left(\frac{x-\mu_j}{s}\right)$$
+where $$\sigma(x) = \frac{1}{1+exp(-x)} $$
+]
+
+
+---
+# Easy Example
+
+.pull-left[
+Polynomial Curve Fitting
+
+$$y = sin(2 \pi x) + \epsilon$$
+```{r echo=FALSE, }
+set.seed(2021)
+x <- sample(seq(0, 1, by = 0.05), 10)
+y <- sin(2* pi * x) + rnorm(length(x), sd = 0.2)
+mydata <- tibble(x = x, y = y)
+mydata
+```
+
+
+
+]
+.pull-right[
+```{r, echo=FALSE}
+x2 <- seq(0, 1, by = 0.01)
+y2 <- sin(2* pi * x2)
+plot(x, y)
+points(x2, y2, type = "l", col = "red")
+```
+
+]
+
+---
+# 0th order polynomial
+
+.pull-left[
+$f(x) = \beta_0$
+
+]
+.pull-right[
+
+```{r, echo=FALSE}
+x2 <- seq(0, 1, by = 0.01)
+y2 <- sin(2* pi * x2)
+plot(x, y)
+points(x2, y2, type = "l", col = "red")
+abline(h = mean(y), col = "blue")
+```
+
+]
+
+
+
+---
+# 1th order polynomial
+
+.pull-left[
+$f(x) = \beta_0 + \beta_1 x$
+
+]
+.pull-right[
+```{r, echo=FALSE}
+x2 <- seq(0, 1, by = 0.01)
+y2 <- sin(2* pi * x2)
+result <- lm(y~x, data = mydata)
+plot(x, y)
+points(x2, y2, type = "l", col = "red")
+abline(result, col = "blue")
+```
+
+]
+
+
+
+---
+# 3th order polynomial
+
+.pull-left[
+$f(x) = \beta_0 + \beta_1 x + \beta_2 x^2 + \beta x^3$
+
+]
+.pull-right[
+```{r, echo=FALSE, warning=FALSE}
+x2 <- seq(0, 1, by = 0.01)
+y2 <- sin(2* pi * x2)
+result <- lm(y~poly(x, 3), data = mydata)
+plot(x, y)
+points(x2, y2, type = "l", col = "red")
+y3 <- predict(result, newdata = tibble(x = x2))
+points(x2, y3, type = "l", col = "blue")
+```
+
+]
+
+
+---
+# Feel so good~! Let's do 9th!!
+
+.pull-left[
+
+Is this looks okay? Why?
+
+]
+.pull-right[
+```{r, echo=FALSE, warning=FALSE}
+x2 <- seq(0, 1, by = 0.01)
+y2 <- sin(2* pi * x2)
+result <- lm(y~poly(x, 9), data = mydata)
+plot(x, y)
+points(x2, y2, type = "l", col = "red")
+y3 <- predict(result, newdata = tibble(x = x2))
+points(x2, y3, type = "l", col = "blue")
+```
+
+]
+
+---
+# Avoid Over fitting: Regularization
+
+Consider the new loss function;
+
+$$Loss=L\left(\beta;X\right)+\lambda R\left(\beta\right)$$
+where the function $R$ represents the regularization term.
+
+---
+# Ridge regression
+
+Ridge regression use $L_2$ norm
+
+$$\underset{\beta}{min}\left(y-X\beta\right)^{T}\left(y-X\beta\right)+\frac{\lambda}{2}\left\Vert \beta\right\Vert _{2}^{2}$$
+
+H.W. What is the optimal $\beta_{\star}$?
+
+# Lasso regression
+
+Lasso regression use $L_1$ norm
+
+$$\underset{\beta}{min}\left(y-X\beta\right)^{T}\left(y-X\beta\right)+\frac{\lambda}{2}\left\Vert \beta\right\Vert _{1}$$
+
+---
+# Elastic Net
+
+Why don't we have the both of the two?
+
+$${\displaystyle {\hat {\beta }}\equiv {\underset {\beta }{\operatorname {argmin} }}(\|y-X\beta \|^{2}+\lambda _{2}\|\beta \|^{2}+\lambda _{1}\|\beta \|_{1}).}$$
+The loss function can be parameterized with the two parameters; $\lambda$, $\alpha$
+
+* $\lambda$ controls the magnitude
+* $\alpha$ controls the weights of the two panalty functions
+
+$$\underset{\beta}{min}\left(y-X\beta\right)^{T}\left(y-X\beta\right)+\frac{\lambda}{2}\left(\alpha\left\Vert \beta\right\Vert _{1}+\left(1-\alpha\right)\left\Vert \beta\right\Vert _{2}^{2}\right)$$
 
 
 ---

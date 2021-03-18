@@ -1,0 +1,43 @@
+---
+title: "Advanced housing price"
+output:
+  html_document:
+    number_sections: true
+    fig_caption: true
+    toc: true
+    fig_width: 5
+    fig_height: 4
+    theme: cosmo
+    highlight: tango
+    code_folding: show
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.align = "center")
+```
+
+# Preparations {.tabset .tabset-fade}
+
+## Libraries
+
+We mainly exploits the functions from the tidyvers and tidymodels packages. `magrittr` has my favorite operators!
+
+```{r load_lib, message=FALSE, warning=FALSE, results='hide'}
+library(tidymodels)
+library(tidyverse)
+library(magrittr)
+```
+
+## Data load
+
+```{r}
+
+```
+
+
+## hello three
+
+# Tabular Overview {.tabset .tabset-fade}
+
+hello
